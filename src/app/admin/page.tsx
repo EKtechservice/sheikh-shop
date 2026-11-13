@@ -7,6 +7,8 @@ import AdminDashboardClient from "./AdminDashboardClient";
 import Link from "next/link";
 import { ShieldCheck, LogOut, Store, ExternalLink } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Owner Admin Dashboard | Sheikh's Shop",
   description: "Private inventory & price management dashboard.",

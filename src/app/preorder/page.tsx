@@ -10,6 +10,8 @@ import Newsletter from "@/components/Newsletter";
 import { getLivePreorderProducts } from "@/lib/products";
 import { ChevronRight, Zap, Clock, ShieldCheck, Truck } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Preorder Electronic Gadgets | Phones, Laptops & Tech | Sheikh's Shop",
   description:

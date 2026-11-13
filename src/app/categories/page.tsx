@@ -11,6 +11,8 @@ import { CATEGORIES } from "@/data/categories";
 import { getLiveProducts } from "@/lib/products";
 import { ChevronRight, ArrowRight } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Shop All Categories | Sheikh's Shop Menswear",
   description:

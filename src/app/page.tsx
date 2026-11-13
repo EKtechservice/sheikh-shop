@@ -8,6 +8,8 @@ import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
 import { getLiveProducts } from "@/lib/products";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const allProducts = await getLiveProducts();
   const featured = allProducts.slice(0, 3);

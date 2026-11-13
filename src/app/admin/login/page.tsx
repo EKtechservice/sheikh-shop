@@ -6,6 +6,8 @@ import Link from "next/link";
 import AdminLoginForm from "./AdminLoginForm";
 import { ArrowLeft } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Admin Login | Sheikh's Shop",
   description: "Secure private portal for Sheikh's Shop administration.",

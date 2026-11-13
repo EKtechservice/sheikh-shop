@@ -10,6 +10,8 @@ import Newsletter from "@/components/Newsletter";
 import { getLiveSaleProducts } from "@/lib/products";
 import { ChevronRight, Tag } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Seasonal Sale & Offers | Sheikh's Shop Menswear",
   description:

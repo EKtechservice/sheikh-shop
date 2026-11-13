@@ -10,6 +10,8 @@ import Newsletter from "@/components/Newsletter";
 import { getLiveNewArrivals } from "@/lib/products";
 import { ChevronRight, Sparkles } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "New Arrivals | Sheikh's Shop Modern Menswear",
   description:

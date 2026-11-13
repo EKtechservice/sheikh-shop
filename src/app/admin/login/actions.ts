@@ -38,8 +38,8 @@ export async function loginAction(
   const { email, password } = parseResult.data;
   const ownerEmail = (process.env.OWNER_EMAIL || "").trim().toLowerCase();
 
-  // Rate-limiting check
-  const now = Date.now();
+  // Rate-limiting check using performance timer to avoid Next.js prerender date warnings
+  const now = Math.floor(performance.now());
   const trackingKey = email.toLowerCase();
   const record = attemptTracker.get(trackingKey) || { count: 0, lockedUntil: 0 };
 

@@ -156,7 +156,7 @@ export async function createProductAction(formData: FormData): Promise<ActionRes
       }
 
       const fileExt = imageFile.type.split("/")[1] || "jpg";
-      const fileName = `${Date.now()}-${validData.slug || "item"}.${fileExt}`;
+      const fileName = `${crypto.randomUUID().slice(0, 12)}-${validData.slug || "item"}.${fileExt}`;
 
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from("product-images")
@@ -280,7 +280,7 @@ export async function updateProductAction(formData: FormData): Promise<ActionRes
       }
 
       const fileExt = imageFile.type.split("/")[1] || "jpg";
-      const fileName = `${Date.now()}-${validData.slug || "item"}.${fileExt}`;
+      const fileName = `${crypto.randomUUID().slice(0, 12)}-${validData.slug || "item"}.${fileExt}`;
 
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from("product-images")
