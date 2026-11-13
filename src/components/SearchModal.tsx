@@ -70,17 +70,30 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     };
   }, [isOpen]);
 
-  // Focus input on open
+  // Focus input on open & manage Android hardware back-button navigation
   useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => {
         inputRef.current?.focus();
       }, 100);
-      return () => clearTimeout(timer);
+
+      // Push history entry for back-button modal dismiss
+      window.history.pushState({ modal: "search" }, "");
+
+      const handlePopState = () => {
+        onClose();
+      };
+
+      window.addEventListener("popstate", handlePopState);
+
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener("popstate", handlePopState);
+      };
     } else {
       setQuery("");
     }
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -123,6 +136,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
+    inputRef.current?.blur(); // Dismiss virtual keyboard on touch devices
     onClose();
     router.push(`/search?q=${encodeURIComponent(query.trim())}`);
   };
@@ -158,6 +172,11 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search shirts, polos, slides, joggers..."
+            enterKeyHint="search"
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="off"
+            spellCheck={false}
             className="w-full text-base sm:text-lg font-medium text-navy placeholder:text-zinc-400 focus:outline-none"
           />
           {query && (

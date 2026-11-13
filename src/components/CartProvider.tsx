@@ -52,29 +52,53 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(INITIAL_DEFAULT_ITEMS);
   const isHydratedRef = useRef(false);
 
-  // Restore cart from localStorage on client mount
+  // Restore cart from localStorage on client mount & listen for multi-tab updates
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setItems(parsed);
+    const syncFromStorage = () => {
+      try {
+        if (typeof window === "undefined" || !window.localStorage) return;
+        const stored = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setItems(parsed);
+          }
+        }
+      } catch {
+        // Safe fallback for Safari Private Browsing mode / restricted cookies
+      }
+    };
+
+    syncFromStorage();
+    isHydratedRef.current = true;
+
+    // Cross-tab synchronization
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === LOCAL_STORAGE_KEY && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          if (Array.isArray(parsed)) {
+            setItems(parsed);
+          }
+        } catch {
+          // Ignore parse errors from concurrent writes
         }
       }
-    } catch {
-      // Ignore storage errors
-    }
-    isHydratedRef.current = true;
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
   // Sync to localStorage on item change after initial hydration
   useEffect(() => {
     if (!isHydratedRef.current) return;
     try {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(items));
+      if (typeof window !== "undefined" && window.localStorage) {
+        window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(items));
+      }
     } catch {
-      // Ignore storage quota errors
+      // Safe fallback: Ignore quota exceeded / restricted storage in Safari private mode
     }
   }, [items]);
 

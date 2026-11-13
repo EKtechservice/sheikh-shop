@@ -50,13 +50,21 @@ export default function Header({ cartCount: explicitCartCount }: HeaderProps) {
     }
   }, [cartCount]);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll and handle Android back button when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
+
+      window.history.pushState({ drawer: "menu" }, "");
+      const handlePopState = () => {
+        setIsMobileMenuOpen(false);
+      };
+      window.addEventListener("popstate", handlePopState);
+
       return () => {
         document.body.style.overflow = originalOverflow;
+        window.removeEventListener("popstate", handlePopState);
       };
     }
   }, [isMobileMenuOpen]);
@@ -170,7 +178,7 @@ export default function Header({ cartCount: explicitCartCount }: HeaderProps) {
           />
 
           {/* Drawer Content with Safe-Area Padding */}
-          <div className="relative ml-auto flex h-full w-[290px] max-w-[85vw] flex-col bg-brand-black p-6 text-white shadow-2xl transition-transform duration-300 pt-safe pb-safe">
+          <div className="relative ml-auto flex h-[100dvh] max-h-[100dvh] w-[290px] max-w-[85vw] flex-col bg-brand-black p-6 text-white shadow-2xl transition-transform duration-300 pt-safe pb-safe overscroll-contain">
             {/* Drawer Header */}
             <div className="flex items-center justify-between pb-5 border-b border-white/10">
               <span className="text-xs uppercase tracking-widest text-zinc-400 font-semibold">

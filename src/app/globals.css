@@ -91,9 +91,32 @@
   margin-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* iOS Smooth Momentum Scrolling */
+/* iOS Smooth Momentum Scrolling & Overscroll Containment */
 .overflow-touch {
   -webkit-overflow-scrolling: touch;
+}
+
+.overscroll-contain {
+  overscroll-behavior: contain;
+  -ms-scroll-chaining: none;
+}
+
+/* Fallback for WebKit backdrop blur on older iOS versions */
+@supports (-webkit-backdrop-filter: none) {
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg {
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* Touch device active feedback without sticky hover states */
+@media (hover: none) and (pointer: coarse) {
+  a:active,
+  button:active {
+    opacity: 0.85;
+    transform: scale(0.985);
+  }
 }
 
 /* Custom Luxury E-Commerce Animations */

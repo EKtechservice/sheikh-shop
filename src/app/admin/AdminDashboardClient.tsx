@@ -86,6 +86,33 @@ export default function AdminDashboardClient({
     setProducts(initialProducts);
   }, [initialProducts]);
 
+  // Lock body scroll and listen for back/escape when delete dialog is open
+  useEffect(() => {
+    if (productToDelete) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+
+      window.history.pushState({ dialog: "delete-confirm" }, "");
+      const handlePopState = () => {
+        setProductToDelete(null);
+      };
+      window.addEventListener("popstate", handlePopState);
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          setProductToDelete(null);
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        window.removeEventListener("popstate", handlePopState);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [productToDelete]);
+
   const reloadProducts = async () => {
     const res = await getAdminProducts();
     if (res.products && res.products.length > 0) {

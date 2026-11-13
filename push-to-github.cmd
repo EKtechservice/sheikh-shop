@@ -24,19 +24,11 @@ echo   3. Do NOT check README, .gitignore, or license
 echo   4. Click "Create repository"
 echo ========================================================
 echo.
-set /p REPO_URL="Paste your GitHub Repository URL: "
+set DEFAULT_URL=https://github.com/EKtechservice/sheikh-shop.git
+echo Default URL: %DEFAULT_URL%
+set /p REPO_URL="Paste your GitHub Repository URL (Press Enter for default): "
 
-if "%REPO_URL%"=="" (
-    echo.
-    echo [Notice] No repository URL entered. Your local changes are committed.
-    echo When you have your URL, you can run this script again or run:
-    echo   git remote add origin YOUR_URL
-    echo   git branch -M main
-    echo   git push -u origin main
-    echo.
-    pause
-    exit /b
-)
+if "%REPO_URL%"=="" set REPO_URL=%DEFAULT_URL%
 
 echo.
 echo Configuring remote 'origin' to: %REPO_URL%

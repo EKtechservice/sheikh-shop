@@ -93,6 +93,33 @@ export default function ProductFormModal({
     setErrorMessage(null);
   }, [initialProduct, isOpen]);
 
+  // Lock body scroll and handle Android back button & Escape key when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+
+      window.history.pushState({ modal: "admin-product-form" }, "");
+      const handlePopState = () => {
+        onClose();
+      };
+      window.addEventListener("popstate", handlePopState);
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          onClose();
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        window.removeEventListener("popstate", handlePopState);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [isOpen, onClose]);
+
   // Handle category dropdown change
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const slug = e.target.value;
