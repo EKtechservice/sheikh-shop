@@ -1,0 +1,487 @@
+export interface Product {
+  readonly id: string | number;
+  readonly name: string;
+  readonly slug: string;
+  readonly category?: string;
+  readonly categoryName?: string;
+  readonly price: number;
+  readonly compareAtPrice?: number;
+  readonly image: string;
+  readonly onSale: boolean;
+  readonly isNewArrival?: boolean;
+  readonly description?: string;
+  readonly inStock?: boolean;
+  readonly sizes?: readonly string[];
+}
+
+export const ALL_PRODUCTS: readonly Product[] = [
+  // --- 1. SHIRTS ---
+  {
+    id: "prod-oxford-shirt",
+    name: "Oxford Cotton Shirt",
+    slug: "oxford-cotton-shirt",
+    category: "shirts",
+    categoryName: "Shirts",
+    price: 80.0,
+    compareAtPrice: 120.0,
+    image: "/images/products/oxford-shirt-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Crafted from 100% premium long-staple Egyptian cotton. Features a tailored modern collar, mother-of-pearl buttons, and breathable all-day comfort.",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+  },
+  {
+    id: "prod-white-dress-shirt",
+    name: "Classic White Dress Shirt",
+    slug: "classic-white-dress-shirt",
+    category: "shirts",
+    categoryName: "Shirts",
+    price: 85.0,
+    compareAtPrice: 115.0,
+    image: "/images/categories/shirts-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "The quintessential formal dress shirt. Wrinkle-resistant finish with sharp cuffs and a crisp spread collar designed for business and formal affairs.",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+  },
+  {
+    id: "prod-striped-luxury-shirt",
+    name: "Tailored Striped Business Shirt",
+    slug: "tailored-striped-business-shirt",
+    category: "shirts",
+    categoryName: "Shirts",
+    price: 90.0,
+    compareAtPrice: 125.0,
+    image: "/images/categories/shirts-v2.png",
+    onSale: true,
+    isNewArrival: false,
+    description: "Sophisticated micro-stripe pattern woven in superfine 2-ply cotton for a refined silhouette under blazers or worn solo.",
+    sizes: ["M", "L", "XL"],
+  },
+
+  // --- 2. POLO SHIRTS ---
+  {
+    id: "prod-linen-polo",
+    name: "Linen Polo Shirt",
+    slug: "linen-polo-shirt",
+    category: "polo-shirts",
+    categoryName: "Polo Shirts",
+    price: 100.0,
+    compareAtPrice: 130.0,
+    image: "/images/products/linen-polo-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Woven in airy French flax linen blend with a ribbed open collar. Naturally thermoregulating and effortless for warm-weather smart casual dressing.",
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: "prod-mercerized-polo",
+    name: "Mercerized Slim Cotton Polo",
+    slug: "mercerized-slim-cotton-polo",
+    category: "polo-shirts",
+    categoryName: "Polo Shirts",
+    price: 92.0,
+    compareAtPrice: 125.0,
+    image: "/images/categories/polo-shirts-v2.png",
+    onSale: true,
+    isNewArrival: false,
+    description: "Double-mercerized organic cotton provides a subtle silk-like sheen, saturated color retention, and unmatched softness against the skin.",
+    sizes: ["M", "L", "XL", "XXL"],
+  },
+  {
+    id: "prod-signature-pique-polo",
+    name: "Signature Pique Knit Polo",
+    slug: "signature-pique-knit-polo",
+    category: "polo-shirts",
+    categoryName: "Polo Shirts",
+    price: 88.0,
+    compareAtPrice: 110.0,
+    image: "/images/categories/polo-shirts-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Heavyweight honeycomb pique cotton with reinforced side slits and ribbed collar that stays upright wear after wear.",
+    sizes: ["S", "M", "L", "XL"],
+  },
+
+  // --- 3. SHORTS ---
+  {
+    id: "prod-linen-shorts",
+    name: "Tailored Linen Summer Shorts",
+    slug: "tailored-linen-summer-shorts",
+    category: "shorts",
+    categoryName: "Shorts",
+    price: 65.0,
+    compareAtPrice: 90.0,
+    image: "/images/categories/shorts-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Casual elegance meets breezy comfort. Features an internal drawstring, zip fly with horn button closure, and deep slash pockets.",
+    sizes: ["30", "32", "34", "36", "38"],
+  },
+  {
+    id: "prod-chino-smart-shorts",
+    name: "Classic Chino Smart Shorts",
+    slug: "classic-chino-smart-shorts",
+    category: "shorts",
+    categoryName: "Shorts",
+    price: 60.0,
+    compareAtPrice: 85.0,
+    image: "/images/categories/shorts-v2.png",
+    onSale: true,
+    isNewArrival: false,
+    description: "Washed stretch twill with a 7-inch inseam. Versatile styling that pairs effortlessly with polos, tees, and slides.",
+    sizes: ["30", "32", "34", "36"],
+  },
+  {
+    id: "prod-casual-stretch-shorts",
+    name: "Lightweight Cotton Casual Shorts",
+    slug: "lightweight-cotton-casual-shorts",
+    category: "shorts",
+    categoryName: "Shorts",
+    price: 55.0,
+    compareAtPrice: 75.0,
+    image: "/images/categories/shorts-v2.png",
+    onSale: true,
+    isNewArrival: false,
+    description: "Relaxed comfort with an elastic waistband, rear welt pockets, and garment-dyed finish for a vintage lived-in feel.",
+    sizes: ["S", "M", "L", "XL"],
+  },
+
+  // --- 4. JEANS ---
+  {
+    id: "prod-slim-denim-jeans",
+    name: "Slim Denim Jeans",
+    slug: "slim-denim-jeans",
+    category: "jeans",
+    categoryName: "Jeans",
+    price: 130.0,
+    compareAtPrice: 150.0,
+    image: "/images/products/slim-jeans-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Premium Japanese denim with 2% elastane for unrestricted movement. Tailored slim fit through the thigh with a clean tapered ankle.",
+    sizes: ["30x32", "32x32", "34x32", "36x32", "38x32"],
+  },
+  {
+    id: "prod-indigo-selvedge-jeans",
+    name: "Dark Indigo Raw Selvedge Jeans",
+    slug: "dark-indigo-raw-selvedge-jeans",
+    category: "jeans",
+    categoryName: "Jeans",
+    price: 145.0,
+    compareAtPrice: 180.0,
+    image: "/images/categories/jeans-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Heavy 13.5oz shuttle-loom redline selvedge denim. Rich deep indigo that develops unique, personalized fades over time.",
+    sizes: ["30x32", "32x32", "34x32", "36x32"],
+  },
+  {
+    id: "prod-black-stretch-jeans",
+    name: "Jet Black Stretch Denim",
+    slug: "jet-black-stretch-denim",
+    category: "jeans",
+    categoryName: "Jeans",
+    price: 135.0,
+    compareAtPrice: 165.0,
+    image: "/images/categories/jeans-v2.png",
+    onSale: true,
+    isNewArrival: false,
+    description: "Stay-black dye technology prevents fading even after dozens of washes. Matte black hardware and reinforced bar-tacks throughout.",
+    sizes: ["30x32", "32x32", "34x32", "36x32"],
+  },
+
+  // --- 5. BOXERS ---
+  {
+    id: "prod-modal-boxers-3pack",
+    name: "Luxury Modal Boxers (3-Pack)",
+    slug: "luxury-modal-boxers-3-pack",
+    category: "boxers",
+    categoryName: "Boxers",
+    price: 45.0,
+    compareAtPrice: 65.0,
+    image: "/images/categories/boxers-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Silky soft Austrian micromodal fibers with 4-way stretch, anti-chafing flatlock seams, and a plush jacquard microfiber waistband.",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+  },
+  {
+    id: "prod-bamboo-trunks",
+    name: "Breathable Bamboo Cotton Trunks",
+    slug: "breathable-bamboo-cotton-trunks",
+    category: "boxers",
+    categoryName: "Boxers",
+    price: 40.0,
+    compareAtPrice: 55.0,
+    image: "/images/categories/boxers-v2.png",
+    onSale: true,
+    isNewArrival: false,
+    description: "Natural bamboo viscose provides antibacterial odor resistance and 3x the breathability of conventional cotton.",
+    sizes: ["M", "L", "XL"],
+  },
+  {
+    id: "prod-pure-cotton-boxers",
+    name: "Pure Cotton Classic Fit Boxers",
+    slug: "pure-cotton-classic-fit-boxers",
+    category: "boxers",
+    categoryName: "Boxers",
+    price: 38.0,
+    compareAtPrice: 50.0,
+    image: "/images/categories/boxers-v2.png",
+    onSale: true,
+    isNewArrival: false,
+    description: "Traditional relaxed fit boxer shorts with a covered elastic waistband and functional single-button fly.",
+    sizes: ["S", "M", "L", "XL"],
+  },
+
+  // --- 6. PERFUMES ---
+  {
+    id: "prod-oud-noir",
+    name: "Sheikh OUD Noir Eau de Parfum (100ml)",
+    slug: "sheikh-oud-noir-eau-de-parfum",
+    category: "perfumes",
+    categoryName: "Perfumes",
+    price: 180.0,
+    compareAtPrice: 220.0,
+    image: "/images/categories/perfumes-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "An opulent blend of smoky Cambodian Agarwood, Bulgarian rose, rare saffron, and warm leather. Exceptional 12+ hour longevity and projection.",
+    sizes: ["50ml", "100ml"],
+  },
+  {
+    id: "prod-royal-ambergris",
+    name: "Royal Ambergris Extrait de Parfum",
+    slug: "royal-ambergris-extrait-de-parfum",
+    category: "perfumes",
+    categoryName: "Perfumes",
+    price: 210.0,
+    compareAtPrice: 260.0,
+    image: "/images/categories/perfumes-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "30% oil concentration featuring genuine oceanic ambergris, Tahitian vanilla bean, cedarwood, and spicy cardamom.",
+    sizes: ["50ml", "100ml"],
+  },
+  {
+    id: "prod-velvet-woods",
+    name: "Velvet Woods & Bergamot Cologne",
+    slug: "velvet-woods-bergamot-cologne",
+    category: "perfumes",
+    categoryName: "Perfumes",
+    price: 165.0,
+    compareAtPrice: 200.0,
+    image: "/images/categories/perfumes-v2.png",
+    onSale: true,
+    isNewArrival: false,
+    description: "Invigorating Calabrian bergamot opens into rich Indonesian patchouli, smoked vetiver, and creamy sandalwood.",
+    sizes: ["100ml"],
+  },
+
+  // --- 7. SLIDES ---
+  {
+    id: "prod-luxury-striped-slides",
+    name: "Men's Luxury Striped Comfort Slides",
+    slug: "mens-luxury-striped-comfort-slides",
+    category: "slides",
+    categoryName: "Slides",
+    price: 75.0,
+    compareAtPrice: 110.0,
+    image: "/images/categories/slides-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Ergonomically contoured EVA footbed with dual-tone luxury ribbed strap and anti-slip tread sole. Perfect for leisure, poolside, and daily errands.",
+    sizes: ["40", "41", "42", "43", "44", "45"],
+  },
+  {
+    id: "prod-black-molded-slides",
+    name: "Signature Black Molded Sole Slides",
+    slug: "signature-black-molded-sole-slides",
+    category: "slides",
+    categoryName: "Slides",
+    price: 85.0,
+    compareAtPrice: 120.0,
+    image: "/images/categories/slides-original.jpg",
+    onSale: true,
+    isNewArrival: true,
+    description: "High-grade shock-absorbing foam with architectural textured footbed and raised arch support for maximum fatigue reduction.",
+    sizes: ["41", "42", "43", "44", "45"],
+  },
+  {
+    id: "prod-cushioned-waterproof-slides",
+    name: "Cushioned Waterproof Daily Slides",
+    slug: "cushioned-waterproof-daily-slides",
+    category: "slides",
+    categoryName: "Slides",
+    price: 65.0,
+    compareAtPrice: 90.0,
+    image: "/images/categories/slides-v2.png",
+    onSale: true,
+    isNewArrival: false,
+    description: "Ultralight injection-molded slide sandals. 100% waterproof, easy to rinse clean, and cushioned for all-day ease.",
+    sizes: ["40", "41", "42", "43", "44"],
+  },
+
+  // --- 8. COMBO DEALS ---
+  {
+    id: "prod-gentlemans-3in1-combo",
+    name: "Ultimate Gentleman's 3-in-1 Combo (Polo + Boxer + Perfume)",
+    slug: "ultimate-gentlemans-3in1-combo",
+    category: "combo-deals",
+    categoryName: "Combo Deals",
+    price: 165.0,
+    compareAtPrice: 250.0,
+    image: "/images/categories/combo-deals-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "The complete luxury essentials trio: 1x Black Mercerized Slim Polo, 1x Premium Modal Boxer, and 1x Sheikh Signature Noir Eau de Parfum (50ml). Save $85 instantly.",
+    sizes: ["S / M", "M / L", "L / XL", "XL / XXL"],
+  },
+  {
+    id: "prod-black-edition-bundle",
+    name: "Black Edition Luxury Essentials Bundle",
+    slug: "black-edition-luxury-essentials-bundle",
+    category: "combo-deals",
+    categoryName: "Combo Deals",
+    price: 185.0,
+    compareAtPrice: 280.0,
+    image: "/images/categories/combo-deals-banner.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Monochrome luxury suite featuring our best-selling Black Linen Shirt, Black Stretch Denim, and Eau de Parfum travel atomizer.",
+    sizes: ["M", "L", "XL"],
+  },
+  {
+    id: "prod-weekend-style-set",
+    name: "Weekend Style Set (Shirt + Shorts + Cologne)",
+    slug: "weekend-style-set",
+    category: "combo-deals",
+    categoryName: "Combo Deals",
+    price: 195.0,
+    compareAtPrice: 290.0,
+    image: "/images/categories/combo-deals-v2.png",
+    onSale: true,
+    isNewArrival: false,
+    description: "Head-to-toe summer refinement: 1x Crisp Oxford Shirt, 1x Tailored Linen Shorts, and 1x Velvet Woods Bergamot Cologne.",
+    sizes: ["S", "M", "L", "XL"],
+  },
+
+  // --- 9. BIRTHDAY GIFTS ---
+  {
+    id: "prod-deluxe-birthday-box",
+    name: "Deluxe Birthday Gift Box for Him (Polo + Cologne + Ribbon Gift Box)",
+    slug: "deluxe-birthday-gift-box-for-him",
+    category: "birthday-gifts",
+    categoryName: "Birthday Gifts",
+    price: 199.0,
+    compareAtPrice: 295.0,
+    image: "/images/categories/birthday-gifts-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "The ultimate ready-to-gift surprise! Beautifully presented in a matte black embossed gift box with silk satin ribbon. Includes tailored polo, premium cologne, modal underwear, and custom greeting card.",
+    sizes: ["Standard Box (M)", "Standard Box (L)", "Standard Box (XL)"],
+  },
+  {
+    id: "prod-celebration-fragrance-hamper",
+    name: "Celebration Fragrance & Grooming Hamper",
+    slug: "celebration-fragrance-grooming-hamper",
+    category: "birthday-gifts",
+    categoryName: "Birthday Gifts",
+    price: 175.0,
+    compareAtPrice: 240.0,
+    image: "/images/categories/birthday-gifts-banner.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "A curated olfactory journey with 2 luxury fragrances, aftershave balm, and an engraved travel atomizer in gold hardware.",
+    sizes: ["One Size"],
+  },
+  {
+    id: "prod-signature-surprise-box",
+    name: "Signature Black Box Gentleman's Surprise Set",
+    slug: "signature-black-box-gentlemans-surprise-set",
+    category: "birthday-gifts",
+    categoryName: "Birthday Gifts",
+    price: 220.0,
+    compareAtPrice: 320.0,
+    image: "/images/categories/birthday-gifts-v2.png",
+    onSale: true,
+    isNewArrival: false,
+    description: "Luxury menswear presentation package including choice of dress shirt, leather slide sandals, and signature perfume in handcrafted box.",
+    sizes: ["Medium Set", "Large Set", "Extra Large Set"],
+  },
+
+  // --- 10. PREORDER / ELECTRONIC GADGETS ---
+  {
+    id: "prod-gadget-iphone-pro",
+    name: "Flagship Smartphone Pro Max (256GB - Titanium)",
+    slug: "flagship-smartphone-pro-max",
+    category: "preorder",
+    categoryName: "Preorder Gadgets",
+    price: 1199.0,
+    compareAtPrice: 1299.0,
+    image: "/images/categories/combo-deals-banner.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Preorder the latest flagship mobile device. Grade 5 aerospace titanium, A-series pro bionic chip, super retina XDR display, and 24-48hr nationwide express delivery.",
+    sizes: ["128GB", "256GB", "512GB", "1TB"],
+  },
+  {
+    id: "prod-gadget-laptop-pro",
+    name: "Ultra-Thin Pro 16\" Studio Laptop",
+    slug: "ultra-thin-pro-16-studio-laptop",
+    category: "preorder",
+    categoryName: "Preorder Gadgets",
+    price: 1899.0,
+    compareAtPrice: 2199.0,
+    image: "/images/categories/birthday-gifts-banner.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Next-gen silicon chip with unified high-speed memory, Liquid Retina mini-LED display, and all-day 22-hour battery life. Includes Ghana warranty and express courier delivery.",
+    sizes: ["16GB / 512GB", "32GB / 1TB", "64GB / 2TB"],
+  },
+  {
+    id: "prod-gadget-wireless-headphones",
+    name: "Active Noise-Cancelling Spatial Audio Headphones",
+    slug: "active-noise-cancelling-spatial-headphones",
+    category: "preorder",
+    categoryName: "Preorder Gadgets",
+    price: 349.0,
+    compareAtPrice: 420.0,
+    image: "/images/categories/perfumes-v2.png",
+    onSale: true,
+    isNewArrival: true,
+    description: "Industry-leading acoustic architecture, custom acoustic drivers, breathable mesh canopy, and 30-hour playback on a single charge.",
+    sizes: ["Midnight Black", "Space Gray", "Silver"],
+  },
+] as const;
+
+// Backwards compatibility for homepage Featured Products section
+export const FEATURED_PRODUCTS: readonly Product[] = [
+  ALL_PRODUCTS[0], // Oxford Cotton Shirt
+  ALL_PRODUCTS[3], // Linen Polo Shirt
+  ALL_PRODUCTS[9], // Slim Denim Jeans
+];
+
+// Helper functions for easy filtering across pages
+export function getProductsByCategory(categorySlug: string): Product[] {
+  return ALL_PRODUCTS.filter(
+    (product) => product.category?.toLowerCase() === categorySlug.toLowerCase()
+  );
+}
+
+export function getProductBySlug(slug: string): Product | undefined {
+  return ALL_PRODUCTS.find((p) => p.slug === slug);
+}
+
+export function getNewArrivals(): Product[] {
+  return ALL_PRODUCTS.filter((p) => p.isNewArrival);
+}
+
+export function getSaleProducts(): Product[] {
+  return ALL_PRODUCTS.filter((p) => p.onSale);
+}
+
+export function getPreorderProducts(): Product[] {
+  return ALL_PRODUCTS.filter((p) => p.category === "preorder");
+}
