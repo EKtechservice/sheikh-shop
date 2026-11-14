@@ -58,6 +58,9 @@ export default function AdminLoginForm() {
               inputMode="email"
               required
               autoComplete="email"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
               placeholder="owner@sheikhsshop.com"
               className="w-full h-12 rounded-xl border border-white/15 bg-white/5 pl-11 pr-4 text-base sm:text-sm text-white placeholder-zinc-500 transition-colors focus:border-white focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-white"
             />

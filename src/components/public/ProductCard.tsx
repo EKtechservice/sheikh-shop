@@ -103,7 +103,7 @@ export default function ProductCard({
           onClick={handleAddToCart}
           aria-live="polite"
           aria-label={`Add ${product.name} to cart`}
-          className={`w-full rounded-md py-2.5 text-[13px] font-semibold text-white shadow-xs transition-all duration-200 active:scale-95 focus-visible:ring-2 focus-visible:ring-navy focus-visible:ring-offset-2 focus:outline-none ${
+          className={`w-full min-h-[44px] inline-flex items-center justify-center rounded-md py-2.5 text-[13px] font-semibold text-white shadow-xs transition-all duration-200 active:scale-95 focus-visible:ring-2 focus-visible:ring-navy focus-visible:ring-offset-2 focus:outline-none cursor-pointer ${
             isAdded
               ? "bg-emerald-600 hover:bg-emerald-700 animate-pop-check"
               : "bg-navy hover:bg-navy-dark hover:shadow-md"

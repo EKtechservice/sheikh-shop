@@ -8,6 +8,7 @@ import { ALL_PRODUCTS, type Product } from "@/data/products";
 import { createClient } from "@/lib/supabase/client";
 import { formatPrice } from "@/lib/utils";
 import { Search, X, ArrowRight, Tag, Sparkles } from "lucide-react";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scrollLock";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -98,10 +99,9 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   // Lock body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
-      const originalOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
+      lockBodyScroll();
       return () => {
-        document.body.style.overflow = originalOverflow;
+        unlockBodyScroll();
       };
     }
   }, [isOpen]);
@@ -159,7 +159,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
       <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-2xl h-full sm:h-auto max-h-[100dvh] sm:max-h-[85vh] rounded-none sm:rounded-2xl bg-white shadow-2xl border-0 sm:border border-zinc-200 overflow-hidden flex flex-col z-10 animate-pop-check pt-safe pb-safe">
+      <div className="relative w-full max-w-2xl h-full sm:h-auto max-h-screen max-h-[100dvh] sm:max-h-[85vh] rounded-none sm:rounded-2xl bg-white shadow-2xl border-0 sm:border border-zinc-200 overflow-hidden flex flex-col z-10 animate-pop-check pt-safe pb-safe pl-safe pr-safe">
         {/* Search Header Input */}
         <form
           onSubmit={handleSubmit}

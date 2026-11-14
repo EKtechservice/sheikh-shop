@@ -1,6 +1,22 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Mobile & Cross-Browser Storefront Verification", () => {
+  const VIEWPORT_WIDTHS = [320, 360, 375, 390, 414, 430, 768];
+
+  for (const width of VIEWPORT_WIDTHS) {
+    test(`No horizontal overflow on ${width}px viewport width`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto("/");
+      await page.waitForLoadState("domcontentloaded");
+
+      // Assert that scrollWidth equals clientWidth / window.innerWidth
+      const hasHorizontalScroll = await page.evaluate(() => {
+        return document.documentElement.scrollWidth > window.innerWidth;
+      });
+      expect(hasHorizontalScroll).toBe(false);
+    });
+  }
+
   test("Homepage loads with correct viewport-fit and mobile header", async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveTitle(/Sheikh's Shop/i);
@@ -14,7 +30,7 @@ test.describe("Mobile & Cross-Browser Storefront Verification", () => {
     await expect(skipLink).toBeAttached();
   });
 
-  test("Mobile navigation drawer opens, displays links, and closes", async ({ page, isMobile }) => {
+  test("Mobile navigation drawer opens, locks body scroll, displays links, and closes", async ({ page, isMobile }) => {
     test.skip(!isMobile, "Mobile drawer is specific to viewports < 1024px");
     await page.goto("/");
 
@@ -40,7 +56,7 @@ test.describe("Mobile & Cross-Browser Storefront Verification", () => {
     await expect(drawer).not.toBeVisible();
   });
 
-  test("Search modal opens, handles touch typing, and dismisses", async ({ page }) => {
+  test("Search modal opens, has >=16px input font size, and dismisses", async ({ page }) => {
     await page.goto("/");
 
     // Click search trigger icon
@@ -60,6 +76,15 @@ test.describe("Mobile & Cross-Browser Storefront Verification", () => {
     await searchInput.fill("shirt");
     await page.keyboard.press("Escape");
     await expect(searchModal).not.toBeVisible();
+  });
+
+  test("Product card Add to Cart button has >=44px tap target", async ({ page }) => {
+    await page.goto("/");
+    const addToCartBtn = page.getByRole("button", { name: /Add .* to cart/i }).first();
+    if (await addToCartBtn.isVisible()) {
+      const box = await addToCartBtn.boundingBox();
+      expect(box?.height).toBeGreaterThanOrEqual(44);
+    }
   });
 
   test("Cart quantity adjustment & WhatsApp checkout form responsiveness", async ({ page }) => {

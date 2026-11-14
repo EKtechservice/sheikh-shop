@@ -80,7 +80,7 @@ export default function Footer() {
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="inline-block py-1 text-[14px] font-medium text-white/90 transition-colors duration-200 hover:text-white hover:underline focus-visible:ring-2 focus-visible:ring-white/70 focus:outline-none rounded-xs"
+                        className="inline-flex items-center min-h-[44px] py-1 text-[14px] font-medium text-white/90 transition-colors duration-200 hover:text-white hover:underline focus-visible:ring-2 focus-visible:ring-white/70 focus:outline-none rounded-xs"
                       >
                         {link.name}
                       </Link>

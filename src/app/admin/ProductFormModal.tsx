@@ -15,6 +15,7 @@ import {
   AlertCircle,
   CheckCircle2,
 } from "lucide-react";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scrollLock";
 
 const CATEGORY_OPTIONS = [
   { slug: "shirts", name: "Shirts" },
@@ -96,8 +97,7 @@ export default function ProductFormModal({
   // Lock body scroll and handle Android back button & Escape key when modal is open
   useEffect(() => {
     if (isOpen) {
-      const originalOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
+      lockBodyScroll();
 
       window.history.pushState({ modal: "admin-product-form" }, "");
       const handlePopState = () => {
@@ -113,7 +113,7 @@ export default function ProductFormModal({
       window.addEventListener("keydown", handleKeyDown);
 
       return () => {
-        document.body.style.overflow = originalOverflow;
+        unlockBodyScroll();
         window.removeEventListener("popstate", handlePopState);
         window.removeEventListener("keydown", handleKeyDown);
       };
@@ -224,7 +224,7 @@ export default function ProductFormModal({
       <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-2xl rounded-t-3xl sm:rounded-2xl border border-white/10 bg-[#0D1016] text-white shadow-2xl overflow-hidden z-10 flex flex-col max-h-[100dvh] sm:max-h-[90dvh]">
+      <div className="relative w-full max-w-2xl rounded-t-3xl sm:rounded-2xl border border-white/10 bg-[#0D1016] text-white shadow-2xl overflow-hidden z-10 flex flex-col max-h-screen max-h-[100dvh] sm:max-h-[90dvh] pb-safe">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 px-5 sm:px-6 py-4 bg-[#141A26] shrink-0 pt-safe">
           <div className="flex items-center gap-2.5">

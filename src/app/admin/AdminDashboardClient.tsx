@@ -24,6 +24,7 @@ import {
   Database,
   Sparkles,
 } from "lucide-react";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scrollLock";
 import { useRouter } from "next/navigation";
 
 interface AdminDashboardClientProps {
@@ -89,8 +90,7 @@ export default function AdminDashboardClient({
   // Lock body scroll and listen for back/escape when delete dialog is open
   useEffect(() => {
     if (productToDelete) {
-      const originalOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
+      lockBodyScroll();
 
       window.history.pushState({ dialog: "delete-confirm" }, "");
       const handlePopState = () => {
@@ -106,7 +106,7 @@ export default function AdminDashboardClient({
       window.addEventListener("keydown", handleKeyDown);
 
       return () => {
-        document.body.style.overflow = originalOverflow;
+        unlockBodyScroll();
         window.removeEventListener("popstate", handlePopState);
         window.removeEventListener("keydown", handleKeyDown);
       };

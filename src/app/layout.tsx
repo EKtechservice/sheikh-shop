@@ -18,16 +18,25 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A0A",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#0A0A0A" },
+    { media: "(prefers-color-scheme: dark)", color: "#0A0A0A" },
+  ],
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sheikhsshop.com"),
   manifest: "/manifest.json",
+  icons: {
+    icon: [{ url: "/favicon.ico" }],
+    apple: [
+      { url: "/images/hero-shirt.jpg", sizes: "180x180", type: "image/jpeg" },
+    ],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -129,12 +138,13 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link rel="apple-touch-icon" href="/images/hero-shirt.jpg" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-[100dvh] bg-white font-sans text-brand-black antialiased selection:bg-tan/20 selection:text-navy">
+      <body className="min-h-screen min-h-[100dvh] bg-white font-sans text-brand-black antialiased selection:bg-tan/20 selection:text-navy overflow-x-hidden">
         <CartProvider>{children}</CartProvider>
       </body>
     </html>

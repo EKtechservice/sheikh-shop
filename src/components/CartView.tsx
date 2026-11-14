@@ -261,7 +261,7 @@ export default function CartView() {
 
         {/* RIGHT COLUMN: Order Summary & WhatsApp Checkout (Cols 8-12) */}
         <div className="lg:col-span-5">
-          <div className="sticky top-24 rounded-2xl border border-zinc-200 bg-zinc-50/80 p-5 sm:p-6 shadow-sm">
+          <div className="sticky top-24 rounded-2xl border border-zinc-200 bg-zinc-50/80 p-5 sm:p-6 shadow-sm pb-safe">
             <h2 className="text-base sm:text-lg font-bold uppercase tracking-wider text-navy border-b border-zinc-200 pb-3">
               Order Details &amp; Checkout
             </h2>
@@ -283,6 +283,7 @@ export default function CartView() {
                 <input
                   type="text"
                   required
+                  autoComplete="name"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="e.g. Samuel Mensah"
@@ -298,6 +299,7 @@ export default function CartView() {
                 <input
                   type="tel"
                   inputMode="tel"
+                  autoComplete="tel"
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -351,6 +353,7 @@ export default function CartView() {
                   <input
                     type="text"
                     required
+                    autoComplete="street-address"
                     value={deliveryAddress}
                     onChange={(e) => setDeliveryAddress(e.target.value)}
                     placeholder="e.g. House No. 12, East Legon, Accra"

@@ -8,7 +8,7 @@ interface AdminFooterProps {
 
 export default function AdminFooter({ ownerEmail }: AdminFooterProps) {
   return (
-    <footer className="w-full border-t border-white/10 bg-[#0A0A0A] py-8 text-zinc-400 text-xs">
+    <footer className="w-full border-t border-white/10 bg-[#0A0A0A] py-8 text-zinc-400 text-xs pb-safe pl-safe pr-safe">
       <div className="mx-auto flex max-w-6xl flex-col sm:flex-row items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2">
           <ShieldCheck className="h-4 w-4 text-[#B98B63]" />
