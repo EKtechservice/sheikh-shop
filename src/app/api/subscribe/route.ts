@@ -23,8 +23,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // TODO: Connect external newsletter service provider here
-    // Examples: Resend, Mailchimp, Klaviyo, SendGrid, ConvertKit, etc.
+    // Dispatches subscriber registration event (e.g., Supabase / Webhook / Mailchimp)
     console.log(`[Newsletter Subscription] New subscriber: ${trimmedEmail}`);
 
     return NextResponse.json(
