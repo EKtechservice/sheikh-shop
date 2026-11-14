@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "@/components/Header";
-import AnnouncementBar from "@/components/AnnouncementBar";
-import HeroCategories from "@/components/HeroCategories";
-import FeaturedProducts from "@/components/FeaturedProducts";
-import WhyChoose from "@/components/WhyChoose";
-import Newsletter from "@/components/Newsletter";
-import Footer from "@/components/Footer";
+import Header from "@/components/public/Header";
+import AnnouncementBar from "@/components/public/AnnouncementBar";
+import HeroCategories from "@/components/public/HeroCategories";
+import FeaturedProducts from "@/components/public/FeaturedProducts";
+import WhyChoose from "@/components/public/WhyChoose";
+import Newsletter from "@/components/public/Newsletter";
+import Footer from "@/components/public/Footer";
 import { getLiveProducts } from "@/lib/products";
 
 export const dynamic = "force-dynamic";

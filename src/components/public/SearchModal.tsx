@@ -25,7 +25,7 @@ const POPULAR_SEARCHES = [
   "Perfumes",
 ];
 
-export default function AdminSearchModal({ isOpen, onClose }: SearchModalProps) {
+export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState("");
   const [liveProducts, setLiveProducts] = useState<readonly Product[]>(ALL_PRODUCTS);
   const inputRef = useRef<HTMLInputElement>(null);

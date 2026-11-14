@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Search, User, ShoppingCart, Menu, X, ShieldCheck } from "lucide-react";
+import { Search, User, ShoppingCart, Menu, X } from "lucide-react";
 import { useCart } from "@/components/CartProvider";
-import AdminLogo from "@/components/admin/AdminLogo";
-import AdminSearchModal from "@/components/admin/AdminSearchModal";
+import Logo from "@/components/Logo";
+import SearchModal from "@/components/SearchModal";
 
 interface NavLinkItem {
   readonly name: string;
@@ -21,11 +21,11 @@ const NAV_LINKS: readonly NavLinkItem[] = [
   { name: "Contact", href: "/contact" },
 ] as const;
 
-interface AdminHeaderProps {
+interface HeaderProps {
   cartCount?: number;
 }
 
-export default function AdminHeader({ cartCount: explicitCartCount }: AdminHeaderProps) {
+export default function Header({ cartCount: explicitCartCount }: HeaderProps) {
   let contextCount: number | undefined;
   try {
     const cart = useCart();
@@ -56,7 +56,7 @@ export default function AdminHeader({ cartCount: explicitCartCount }: AdminHeade
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
 
-      window.history.pushState({ drawer: "admin-menu" }, "");
+      window.history.pushState({ drawer: "menu" }, "");
       const handlePopState = () => {
         setIsMobileMenuOpen(false);
       };
@@ -94,7 +94,7 @@ export default function AdminHeader({ cartCount: explicitCartCount }: AdminHeade
       {/* Main Bar: 72px */}
       <div className="mx-auto flex h-[72px] max-w-content items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* LEFT: Logo Lockup */}
-        <AdminLogo />
+        <Logo />
 
         {/* CENTER: Desktop Navigation */}
         <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-7 xl:gap-8">
@@ -112,12 +112,6 @@ export default function AdminHeader({ cartCount: explicitCartCount }: AdminHeade
 
         {/* RIGHT: Actions & Icons with >= 44x44px Touch Targets */}
         <div className="flex items-center gap-1 sm:gap-2">
-          {/* Owner Portal Badge Indicator */}
-          <span className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-[#1B2A4A] px-2.5 py-1 text-[11px] font-bold text-[#B98B63] border border-[#B98B63]/30 mr-1">
-            <ShieldCheck className="h-3.5 w-3.5 text-[#B98B63]" />
-            <span>Owner</span>
-          </span>
-
           {/* Search Button (Triggers Live Search Modal) */}
           <button
             type="button"
@@ -249,7 +243,7 @@ export default function AdminHeader({ cartCount: explicitCartCount }: AdminHeade
       )}
 
       {/* Live Interactive Search Modal */}
-      <AdminSearchModal
+      <SearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
       />

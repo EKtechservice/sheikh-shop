@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import AdminProductCard from "@/components/admin/AdminProductCard";
+import ProductCard from "@/components/ProductCard";
 import { FEATURED_PRODUCTS, type Product } from "@/data/products";
 import { useCart } from "@/components/CartProvider";
 import { useInView } from "@/lib/useInView";
@@ -10,7 +10,7 @@ interface FeaturedProductsProps {
   products?: readonly Product[];
 }
 
-export default function AdminFeaturedProducts({ products: explicitProducts }: FeaturedProductsProps = {}) {
+export default function FeaturedProducts({ products: explicitProducts }: FeaturedProductsProps = {}) {
   const displayProducts =
     explicitProducts && explicitProducts.length > 0
       ? explicitProducts
@@ -47,7 +47,7 @@ export default function AdminFeaturedProducts({ products: explicitProducts }: Fe
                   : "opacity-0 translate-y-8 motion-reduce:opacity-100 motion-reduce:translate-y-0"
               }`}
             >
-              <AdminProductCard
+              <ProductCard
                 product={product}
                 onAddToCart={(item) => addToCart(item, 1)}
               />

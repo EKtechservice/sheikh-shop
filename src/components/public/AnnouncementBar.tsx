@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 
-export default function AdminAnnouncementBar() {
+export default function AnnouncementBar() {
   const announcements = [
     {
       id: "pickup",

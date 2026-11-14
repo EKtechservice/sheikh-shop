@@ -11,7 +11,7 @@ interface ProductCardProps {
   onAddToCart?: (product: Product) => void;
 }
 
-export default function AdminProductCard({
+export default function ProductCard({
   product,
   onAddToCart,
 }: ProductCardProps) {

@@ -35,7 +35,7 @@ const FEATURES: readonly Feature[] = [
   },
 ] as const;
 
-export default function AdminWhyChoose() {
+export default function WhyChoose() {
   const { ref, isInView } = useInView<HTMLDivElement>({
     threshold: 0.15,
     triggerOnce: true,

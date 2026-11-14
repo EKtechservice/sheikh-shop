@@ -7,7 +7,7 @@ import { CATEGORIES } from "@/data/categories";
 import { HERO_BLUR_DATA_URL, SQUARE_BLUR_DATA_URL } from "@/lib/utils";
 import { useInView } from "@/lib/useInView";
 
-export default function AdminHeroCategories() {
+export default function HeroCategories() {
   const { ref: gridRef, isInView: isGridInView } = useInView<HTMLDivElement>({
     threshold: 0.1,
     triggerOnce: true,

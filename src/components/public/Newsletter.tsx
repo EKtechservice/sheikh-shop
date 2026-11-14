@@ -6,7 +6,7 @@ import { useInView } from "@/lib/useInView";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function AdminNewsletter() {
+export default function Newsletter() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -110,11 +110,11 @@ export default function AdminNewsletter() {
           >
             <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row">
               <div className="relative flex-1">
-                <label htmlFor="admin-newsletter-email" className="sr-only">
+                <label htmlFor="newsletter-email" className="sr-only">
                   Email address
                 </label>
                 <input
-                  id="admin-newsletter-email"
+                  id="newsletter-email"
                   type="email"
                   inputMode="email"
                   value={email}
@@ -125,7 +125,7 @@ export default function AdminNewsletter() {
                   placeholder="Enter your email address"
                   autoComplete="email"
                   aria-invalid={Boolean(error)}
-                  aria-describedby={error ? "admin-newsletter-error" : undefined}
+                  aria-describedby={error ? "newsletter-error" : undefined}
                   className="w-full min-h-[48px] rounded-xl bg-white px-4 py-3 text-base sm:text-sm text-neutral-900 placeholder:text-neutral-500 shadow-xs transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/80 focus:shadow-md"
                 />
               </div>
@@ -152,7 +152,7 @@ export default function AdminNewsletter() {
             {/* Inline Error Message */}
             {error && (
               <p
-                id="admin-newsletter-error"
+                id="newsletter-error"
                 role="alert"
                 aria-live="assertive"
                 className="mt-2.5 text-center text-sm font-medium text-red-300 animate-pop-check"
