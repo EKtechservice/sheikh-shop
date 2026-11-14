@@ -15,6 +15,9 @@ export default function Logo({ href = "/", className = "" }: LogoProps) {
     >
       {/* Decorative Geometric Diamond Lattice / Knotwork Crest (Champagne Gold #E5D3B3) */}
       <svg
+        width={24}
+        height={24}
+        style={{ width: "24px", height: "24px", maxWidth: "24px", maxHeight: "24px" }}
         className="h-5 w-5 sm:h-6 sm:w-6 shrink-0 text-[#E5D3B3] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
         viewBox="0 0 24 24"
         fill="none"
