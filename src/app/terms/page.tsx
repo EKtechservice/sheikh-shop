@@ -61,7 +61,7 @@ export default function TermsPage() {
                 1. Ordering &amp; Stock Availability
               </h2>
               <p className="mt-3">
-                All menswear orders are confirmed via WhatsApp (<strong>{STORE_CONFIG.phoneRaw}</strong>) or through this website. Because popular sizes like <strong>XL and XXL</strong> sell fast, availability is confirmed at the time of your message.
+                All menswear orders are confirmed via WhatsApp (<strong>{STORE_CONFIG.phoneRaw}</strong>) or through this website. Because popular sizes like <strong>L, XL, 2XL, and 3XL</strong> sell fast, availability is confirmed at the time of your message.
               </p>
             </div>
 

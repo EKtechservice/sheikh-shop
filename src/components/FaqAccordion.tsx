@@ -39,7 +39,7 @@ const FAQS: readonly FaqItem[] = [
     category: "products",
     question: "Which sizes are available, and do you have my size in stock?",
     answer:
-      "Our shirts, shorts, and joggers are available in sizes L, XL, and XXL. Slides are available in sizes 42 to 45. Please note that XL and XXL sell out very fast! We advise messaging us on WhatsApp first to confirm today's stock before making payment.",
+      "Our apparel collections (shirts, polo shirts, shorts, boxers, and joggers) are available in sizes S, M, L, XL, 2XL, 3XL, and 4XL. Footwear and slides are available in sizes 40 to 45. Please note that popular sizes sell out fast! We advise messaging us on WhatsApp to confirm real-time availability before making payment.",
   },
   {
     category: "payment",

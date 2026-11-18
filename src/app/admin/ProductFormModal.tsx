@@ -15,7 +15,11 @@ import {
   AlertCircle,
   CheckCircle2,
   Trash2,
+  Check,
 } from "lucide-react";
+
+export const STANDARD_SIZES = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"] as const;
+export const DEFAULT_SIZES = "S, M, L, XL, 2XL, 3XL, 4XL";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scrollLock";
 
 const CATEGORY_OPTIONS = [
@@ -55,7 +59,7 @@ export default function ProductFormModal({
   const [inStock, setInStock] = useState(true);
   const [onSale, setOnSale] = useState(false);
   const [isNewArrival, setIsNewArrival] = useState(false);
-  const [sizes, setSizes] = useState("L, XL, XXL");
+  const [sizes, setSizes] = useState(DEFAULT_SIZES);
   // Front Photo State
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -68,6 +72,64 @@ export default function ProductFormModal({
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Helper to check if a size is currently included in the comma-separated string
+  const isSizeActive = (size: string): boolean => {
+    const list = sizes
+      .split(",")
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
+    const target = size.toLowerCase();
+    return (
+      list.includes(target) ||
+      (target === "2xl" && list.includes("xxl")) ||
+      (target === "xxl" && list.includes("2xl"))
+    );
+  };
+
+  // Helper to toggle a size on/off in the comma-separated sizes string
+  const toggleSize = (sizeToToggle: string) => {
+    const list = sizes
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const target = sizeToToggle.toLowerCase();
+    const exists = list.some(
+      (s) =>
+        s.toLowerCase() === target ||
+        (target === "2xl" && s.toLowerCase() === "xxl") ||
+        (target === "xxl" && s.toLowerCase() === "2xl")
+    );
+
+    let updated: string[];
+    if (exists) {
+      updated = list.filter(
+        (s) =>
+          s.toLowerCase() !== target &&
+          !(target === "2xl" && s.toLowerCase() === "xxl") &&
+          !(target === "xxl" && s.toLowerCase() === "2xl")
+      );
+    } else {
+      const getOrder = (s: string) => {
+        const idx = STANDARD_SIZES.findIndex(
+          (std) =>
+            std.toLowerCase() === s.toLowerCase() ||
+            (std === "2XL" && s.toLowerCase() === "xxl")
+        );
+        return idx !== -1 ? idx : 999;
+      };
+
+      updated = [...list, sizeToToggle].sort((a, b) => {
+        const ordA = getOrder(a);
+        const ordB = getOrder(b);
+        if (ordA !== ordB) return ordA - ordB;
+        return a.localeCompare(b);
+      });
+    }
+
+    setSizes(updated.join(", "));
+  };
 
   // Initialize form state when opening / switching between edit or add
   useEffect(() => {
@@ -96,7 +158,7 @@ export default function ProductFormModal({
       setInStock(true);
       setOnSale(false);
       setIsNewArrival(false);
-      setSizes("L, XL, XXL");
+      setSizes(DEFAULT_SIZES);
       setImagePreview(null);
       setSelectedFile(null);
       setBackImagePreview(null);
@@ -539,17 +601,65 @@ export default function ProductFormModal({
           </div>
 
           {/* 4. Sizes & Description */}
-          <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-              Available Sizes / Variants <span className="text-zinc-500">(Comma separated)</span>
-            </label>
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300">
+                Available Sizes / Variants
+              </label>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setSizes(DEFAULT_SIZES)}
+                  className="text-xs font-semibold text-[#B98B63] hover:text-[#d3a378] transition-colors cursor-pointer"
+                >
+                  Select All (S–4XL)
+                </button>
+                <span className="text-zinc-600 text-xs">•</span>
+                <button
+                  type="button"
+                  onClick={() => setSizes("")}
+                  className="text-xs font-semibold text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            {/* Quick Toggle Buttons for S, M, L, XL, 2XL, 3XL, 4XL */}
+            <div className="flex flex-wrap gap-2">
+              {STANDARD_SIZES.map((size) => {
+                const active = isSizeActive(size);
+                return (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => toggleSize(size)}
+                    className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl border px-3.5 py-2 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                      active
+                        ? "border-[#B98B63] bg-[#B98B63] text-black shadow-sm ring-1 ring-[#B98B63]/40"
+                        : "border-white/10 bg-white/5 text-zinc-300 hover:border-white/20 hover:bg-white/10 hover:text-white"
+                    }`}
+                    title={`Toggle size ${size}`}
+                    aria-label={`Toggle size ${size}`}
+                  >
+                    {active && <Check className="h-3.5 w-3.5 stroke-[3]" />}
+                    <span>{size}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Editable Comma-Separated Input */}
             <input
               type="text"
               value={sizes}
               onChange={(e) => setSizes(e.target.value)}
-              placeholder="S, M, L, XL, XXL (or 42, 43, 44, 45)"
+              placeholder="S, M, L, XL, 2XL, 3XL, 4XL (or custom sizes)"
               className="w-full h-11 sm:h-10 rounded-xl border border-white/15 bg-white/5 px-3.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white"
             />
+            <p className="text-[11px] text-zinc-400">
+              Tap any size button above to toggle it instantly, or type custom sizes separated by commas.
+            </p>
           </div>
 
           <div>

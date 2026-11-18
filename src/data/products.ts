@@ -29,7 +29,7 @@ export const ALL_PRODUCTS: readonly Product[] = [
     onSale: true,
     isNewArrival: true,
     description: "Crafted from 100% premium long-staple Egyptian cotton. Features a tailored modern collar, mother-of-pearl buttons, and breathable all-day comfort.",
-    sizes: ["S", "M", "L", "XL", "XXL"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
   },
   {
     id: "prod-white-dress-shirt",
@@ -43,7 +43,7 @@ export const ALL_PRODUCTS: readonly Product[] = [
     onSale: true,
     isNewArrival: true,
     description: "The quintessential formal dress shirt. Wrinkle-resistant finish with sharp cuffs and a crisp spread collar designed for business and formal affairs.",
-    sizes: ["S", "M", "L", "XL", "XXL"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
   },
   {
     id: "prod-striped-luxury-shirt",
@@ -57,7 +57,7 @@ export const ALL_PRODUCTS: readonly Product[] = [
     onSale: true,
     isNewArrival: false,
     description: "Sophisticated micro-stripe pattern woven in superfine 2-ply cotton for a refined silhouette under blazers or worn solo.",
-    sizes: ["M", "L", "XL"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
   },
 
   // --- 2. POLO SHIRTS ---
@@ -73,7 +73,7 @@ export const ALL_PRODUCTS: readonly Product[] = [
     onSale: true,
     isNewArrival: true,
     description: "Woven in airy French flax linen blend with a ribbed open collar. Naturally thermoregulating and effortless for warm-weather smart casual dressing.",
-    sizes: ["S", "M", "L", "XL"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
   },
   {
     id: "prod-mercerized-polo",
@@ -87,7 +87,7 @@ export const ALL_PRODUCTS: readonly Product[] = [
     onSale: true,
     isNewArrival: false,
     description: "Double-mercerized organic cotton provides a subtle silk-like sheen, saturated color retention, and unmatched softness against the skin.",
-    sizes: ["M", "L", "XL", "XXL"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
   },
   {
     id: "prod-signature-pique-polo",
@@ -101,7 +101,7 @@ export const ALL_PRODUCTS: readonly Product[] = [
     onSale: true,
     isNewArrival: true,
     description: "Heavyweight honeycomb pique cotton with reinforced side slits and ribbed collar that stays upright wear after wear.",
-    sizes: ["S", "M", "L", "XL"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
   },
 
   // --- 3. SHORTS ---

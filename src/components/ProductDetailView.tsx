@@ -182,9 +182,16 @@ export default function ProductDetailView({
           {/* Sizes / Options with >= 44x44px touch targets */}
           {product.sizes && product.sizes.length > 0 && (
             <div className="mt-6">
-              <label className="text-xs font-bold uppercase tracking-wider text-navy block mb-2.5">
-                Select Option / Size:
-              </label>
+              <div className="flex items-center justify-between mb-2.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-navy block">
+                  Select Size:{" "}
+                  {selectedSize && (
+                    <span className="text-tan font-extrabold ml-1 normal-case tracking-normal">
+                      ({selectedSize})
+                    </span>
+                  )}
+                </label>
+              </div>
               <div className="flex flex-wrap gap-2.5">
                 {product.sizes.map((size) => (
                   <button
