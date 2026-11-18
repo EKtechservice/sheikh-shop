@@ -231,7 +231,7 @@ export default function AdminDashboardClient({
               <span>Initial Products Setup</span>
             </h3>
             <p className="text-xs text-amber-300/80 max-w-xl">
-              Your Supabase <code>products</code> table is currently empty. You can import all 21 items from your store catalog with one click.
+              Your Supabase <code>products</code> table is currently empty. You can import all 30 items across all 10 departments from your store catalog with one click.
             </p>
             {seedMessage && (
               <p className="text-xs font-semibold text-emerald-300 mt-2">
@@ -254,7 +254,7 @@ export default function AdminDashboardClient({
             ) : (
               <>
                 <Sparkles className="h-4 w-4" />
-                <span>Import Store Catalog (21 Items)</span>
+                <span>Import Store Catalog (30 Items)</span>
               </>
             )}
           </button>

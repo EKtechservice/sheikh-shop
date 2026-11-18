@@ -47,13 +47,19 @@ export interface ActionResult {
   data?: unknown;
 }
 
-function purgeStoreCache() {
+function purgeStoreCache(categorySlug?: string, productSlug?: string) {
   try {
     revalidatePath("/", "layout");
     revalidatePath("/");
     revalidatePath("/categories");
     revalidatePath("/categories/[slug]", "page");
+    if (categorySlug) {
+      revalidatePath(`/categories/${categorySlug}`);
+    }
     revalidatePath("/products/[slug]", "page");
+    if (productSlug) {
+      revalidatePath(`/products/${productSlug}`);
+    }
     revalidatePath("/new-arrivals");
     revalidatePath("/sale");
     revalidatePath("/preorder");
@@ -62,6 +68,22 @@ function purgeStoreCache() {
   } catch (err) {
     console.error("Cache revalidation error:", err);
   }
+}
+
+export function getCategoryFallbackImage(categorySlug?: string): string {
+  const map: Record<string, string> = {
+    shirts: "/images/categories/shirts-v2.png",
+    "polo-shirts": "/images/categories/polo-shirts-v2.png",
+    shorts: "/images/categories/shorts-v2.png",
+    boxers: "/images/categories/boxers-v2.png",
+    perfumes: "/images/categories/perfumes-v2.png",
+    jeans: "/images/categories/jeans-v2.png",
+    slides: "/images/categories/slides-v2.png",
+    "combo-deals": "/images/categories/combo-deals-v2.png",
+    "birthday-gifts": "/images/categories/birthday-gifts-v2.png",
+    preorder: "/images/categories/combo-deals-banner.png",
+  };
+  return (categorySlug && map[categorySlug.toLowerCase()]) || "/images/categories/shirts-v2.png";
 }
 
 // Reusable Image Uploader to Supabase Storage
@@ -121,13 +143,21 @@ export async function getAdminProducts(): Promise<{ products: Product[]; error?:
       .order("created_at", { ascending: false });
 
     if (error) {
-      return { products: [], error: error.message };
+      return { products: [...ALL_PRODUCTS], error: error.message };
     }
 
-    return { products: (data as DbProductRow[]).map(mapRowToProduct) };
+    const liveProducts = (data as DbProductRow[]).map(mapRowToProduct);
+    const liveSlugs = new Set(liveProducts.map((p) => p.slug.toLowerCase()));
+    const liveIds = new Set(liveProducts.map((p) => String(p.id)));
+
+    const fallbackProducts = ALL_PRODUCTS.filter(
+      (p) => !liveSlugs.has(p.slug.toLowerCase()) && !liveIds.has(String(p.id))
+    );
+
+    return { products: [...liveProducts, ...fallbackProducts] };
   } catch (err) {
     return {
-      products: [],
+      products: [...ALL_PRODUCTS],
       error: err instanceof Error ? err.message : "Failed to load products",
     };
   }
@@ -176,8 +206,8 @@ export async function createProductAction(formData: FormData): Promise<ActionRes
 
     const validData = parseResult.data;
 
-    // Handle Front Image Upload
-    let imageUrl = "/images/categories/shirts-v2.png"; // Fallback default
+    // Handle Front Image Upload with category-matched fallback
+    let imageUrl = getCategoryFallbackImage(validData.category);
     const imageFile = formData.get("imageFile") as File | null;
 
     if (imageFile && imageFile.size > 0) {
@@ -245,14 +275,20 @@ export async function createProductAction(formData: FormData): Promise<ActionRes
       insertError = retry.error;
     }
 
+    // If slug already exists, append unique suffix and retry automatically so publishing never fails
+    if (insertError && insertError.code === "23505") {
+      const fallbackUniqueSlug = `${insertPayload.slug}-${Date.now().toString().slice(-4)}`;
+      insertPayload.slug = fallbackUniqueSlug;
+      const retryUnique = await supabase.from("products").insert(insertPayload).select().single();
+      inserted = retryUnique.data;
+      insertError = retryUnique.error;
+    }
+
     if (insertError) {
-      if (insertError.code === "23505") {
-        return { error: `A product with the slug "${validData.slug}" already exists. Please pick a unique name or slug.` };
-      }
       return { error: insertError.message };
     }
 
-    purgeStoreCache();
+    purgeStoreCache(validData.category, (inserted as any)?.slug);
     return { success: true, data: inserted };
   } catch (err) {
     return {
@@ -373,7 +409,7 @@ export async function updateProductAction(formData: FormData): Promise<ActionRes
       return { error: updateError.message };
     }
 
-    purgeStoreCache();
+    purgeStoreCache(validData.category, validData.slug);
     return { success: true };
   } catch (err) {
     return {

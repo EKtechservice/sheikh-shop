@@ -16,24 +16,142 @@ import {
   CheckCircle2,
   Trash2,
   Check,
+  Wand2,
 } from "lucide-react";
+
+export interface CategoryMeta {
+  slug: string;
+  name: string;
+  exampleName: string;
+  examplePrice: string;
+  exampleCompareAtPrice: string;
+  exampleDescription: string;
+  defaultSizes: string;
+  suggestedSizes: readonly string[];
+  fallbackImage: string;
+}
+
+export const CATEGORY_DEFINITIONS: Record<string, CategoryMeta> = {
+  shirts: {
+    slug: "shirts",
+    name: "Shirts",
+    exampleName: "Oxford Cotton Button-Down Shirt",
+    examplePrice: "80.00",
+    exampleCompareAtPrice: "120.00",
+    exampleDescription: "Crafted from 100% premium long-staple Egyptian cotton. Features a tailored modern collar, mother-of-pearl buttons, and breathable all-day comfort.",
+    defaultSizes: "S, M, L, XL, 2XL, 3XL, 4XL",
+    suggestedSizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
+    fallbackImage: "/images/categories/shirts-v2.png",
+  },
+  "polo-shirts": {
+    slug: "polo-shirts",
+    name: "Polo Shirts",
+    exampleName: "Breezy French Linen Polo Shirt",
+    examplePrice: "95.00",
+    exampleCompareAtPrice: "130.00",
+    exampleDescription: "Woven in airy French flax linen blend with a ribbed open collar. Naturally thermoregulating and effortless for warm-weather smart casual dressing.",
+    defaultSizes: "S, M, L, XL, 2XL, 3XL, 4XL",
+    suggestedSizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
+    fallbackImage: "/images/categories/polo-shirts-v2.png",
+  },
+  shorts: {
+    slug: "shorts",
+    name: "Shorts",
+    exampleName: "Tailored Linen Summer Shorts",
+    examplePrice: "60.00",
+    exampleCompareAtPrice: "85.00",
+    exampleDescription: "Tailored flat-front summer shorts in breathable linen-cotton blend with customized horn buttons and slash side pockets.",
+    defaultSizes: "S, M, L, XL, 2XL, 3XL, 4XL",
+    suggestedSizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
+    fallbackImage: "/images/categories/shorts-v2.png",
+  },
+  boxers: {
+    slug: "boxers",
+    name: "Boxers",
+    exampleName: "Silk Touch Modal Boxer Briefs (3-Pack)",
+    examplePrice: "35.00",
+    exampleCompareAtPrice: "50.00",
+    exampleDescription: "Ultra-soft botanical micromodal with 4-way stretch, anti-roll waistband, and friction-free ergonomic pouch construction.",
+    defaultSizes: "M, L, XL, 2XL, 3XL, 4XL",
+    suggestedSizes: ["M", "L", "XL", "2XL", "3XL", "4XL"],
+    fallbackImage: "/images/categories/boxers-v2.png",
+  },
+  perfumes: {
+    slug: "perfumes",
+    name: "Perfumes",
+    exampleName: "Oud Royale Extrait de Parfum (100ml)",
+    examplePrice: "110.00",
+    exampleCompareAtPrice: "150.00",
+    exampleDescription: "Masterpiece artisanal fragrance combining smoked Cambodian oud, Damascus rose, and golden amber with an enduring 16-hour sillage.",
+    defaultSizes: "50ml, 100ml",
+    suggestedSizes: ["30ml", "50ml", "100ml", "120ml"],
+    fallbackImage: "/images/categories/perfumes-v2.png",
+  },
+  jeans: {
+    slug: "jeans",
+    name: "Jeans",
+    exampleName: "Slim-Fit Japanese Selvedge Denim Jeans",
+    examplePrice: "95.00",
+    exampleCompareAtPrice: "135.00",
+    exampleDescription: "13.5oz authentic selvedge denim with 2% comfort stretch. Custom antiqued copper rivets and a tailored taper from knee to hem.",
+    defaultSizes: "30, 32, 34, 36, 38, 40",
+    suggestedSizes: ["30", "32", "34", "36", "38", "40"],
+    fallbackImage: "/images/categories/jeans-v2.png",
+  },
+  slides: {
+    slug: "slides",
+    name: "Slides",
+    exampleName: "Contoured Ergonomic Leather Slides",
+    examplePrice: "65.00",
+    exampleCompareAtPrice: "90.00",
+    exampleDescription: "Supple full-grain calfskin leather band over an anatomically molded arch-support footbed with non-slip grooved rubber outsole.",
+    defaultSizes: "40, 41, 42, 43, 44, 45",
+    suggestedSizes: ["40", "41", "42", "43", "44", "45"],
+    fallbackImage: "/images/categories/slides-v2.png",
+  },
+  "combo-deals": {
+    slug: "combo-deals",
+    name: "Combo Deals",
+    exampleName: "Executive Style Trio (Shirt + Shorts + Cologne)",
+    examplePrice: "160.00",
+    exampleCompareAtPrice: "220.00",
+    exampleDescription: "Curated 3-piece bundle containing our Oxford Cotton Shirt, tailored shorts, and 50ml signature perfume. Complete wardrobe upgrade with exclusive bundle savings.",
+    defaultSizes: "Standard Set, Deluxe Set, VIP Executive Box",
+    suggestedSizes: ["Standard Set", "Deluxe Set", "VIP Executive Box"],
+    fallbackImage: "/images/categories/combo-deals-v2.png",
+  },
+  "birthday-gifts": {
+    slug: "birthday-gifts",
+    name: "Birthday Gifts",
+    exampleName: "Gentleman's Deluxe Black-Box Gift Hamper",
+    examplePrice: "140.00",
+    exampleCompareAtPrice: "185.00",
+    exampleDescription: "Luxury black-and-gold gift presentation box complete with silk-finish ribbon, premium polo shirt, luxury perfume, and personalized greeting card.",
+    defaultSizes: "Standard Hamper, Luxury Box, VIP Deluxe",
+    suggestedSizes: ["Standard Hamper", "Luxury Box", "VIP Deluxe"],
+    fallbackImage: "/images/categories/birthday-gifts-v2.png",
+  },
+  preorder: {
+    slug: "preorder",
+    name: "Preorder Gadgets",
+    exampleName: "Flagship Smartphone Pro Max (256GB - Titanium)",
+    examplePrice: "1199.00",
+    exampleCompareAtPrice: "1299.00",
+    exampleDescription: "Preorder the latest flagship mobile device. Grade 5 aerospace titanium, A-series pro bionic chip, Super Retina XDR display, and 24-48hr nationwide express delivery.",
+    defaultSizes: "128GB, 256GB, 512GB, 1TB",
+    suggestedSizes: ["128GB", "256GB", "512GB", "1TB"],
+    fallbackImage: "/images/categories/combo-deals-banner.png",
+  },
+};
+
+export const CATEGORY_OPTIONS = Object.values(CATEGORY_DEFINITIONS).map((c) => ({
+  slug: c.slug,
+  name: c.name,
+}));
 
 export const STANDARD_SIZES = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"] as const;
 export const DEFAULT_SIZES = "S, M, L, XL, 2XL, 3XL, 4XL";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scrollLock";
-
-const CATEGORY_OPTIONS = [
-  { slug: "shirts", name: "Shirts" },
-  { slug: "polo-shirts", name: "Polo Shirts" },
-  { slug: "shorts", name: "Shorts" },
-  { slug: "boxers", name: "Boxers" },
-  { slug: "perfumes", name: "Perfumes" },
-  { slug: "jeans", name: "Jeans" },
-  { slug: "slides", name: "Slides" },
-  { slug: "combo-deals", name: "Combo Deals" },
-  { slug: "birthday-gifts", name: "Birthday Gifts" },
-  { slug: "preorder", name: "Preorder Gadgets" },
-];
 
 interface ProductFormModalProps {
   isOpen: boolean;
@@ -193,14 +311,34 @@ export default function ProductFormModal({
     }
   }, [isOpen, onClose]);
 
-  // Handle category dropdown change
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const slug = e.target.value;
-    setCategory(slug);
-    const found = CATEGORY_OPTIONS.find((c) => c.slug === slug);
-    if (found) {
-      setCategoryName(found.name);
+  const activeCatMeta = CATEGORY_DEFINITIONS[category] || CATEGORY_DEFINITIONS.shirts;
+
+  // Handle category change (from dropdown or category quick-chips)
+  const selectCategory = (newSlug: string) => {
+    setCategory(newSlug);
+    const catMeta = CATEGORY_DEFINITIONS[newSlug] || CATEGORY_DEFINITIONS.shirts;
+    setCategoryName(catMeta.name);
+
+    // If adding a new product, adopt the default sizes for that department
+    if (!isEditing) {
+      setSizes(catMeta.defaultSizes);
     }
+  };
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    selectCategory(e.target.value);
+  };
+
+  // One-click quick fill with category-specific example
+  const handleLoadCategoryExample = () => {
+    const meta = CATEGORY_DEFINITIONS[category] || CATEGORY_DEFINITIONS.shirts;
+    setName(meta.exampleName);
+    setPrice(meta.examplePrice);
+    setCompareAtPrice(meta.exampleCompareAtPrice);
+    setDescription(meta.exampleDescription);
+    setSizes(meta.defaultSizes);
+    setImagePreview(meta.fallbackImage);
+    setSelectedFile(null);
   };
 
   // Handle Front Image File selection with preview & validation
@@ -378,6 +516,34 @@ export default function ProductFormModal({
             </div>
           )}
 
+          {/* 0. Category Example Quick-Fill Banner */}
+          <div className="rounded-2xl border border-[#B98B63]/30 bg-gradient-to-r from-[#B98B63]/15 via-white/[0.03] to-transparent p-3.5 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="h-9 w-9 rounded-xl bg-[#B98B63]/25 border border-[#B98B63]/40 flex items-center justify-center shrink-0">
+                <Wand2 className="h-4 w-4 text-[#E5D3B3]" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-white flex items-center gap-2">
+                  <span>Example for {activeCatMeta.name}:</span>
+                  <span className="font-medium text-[#E5D3B3] line-clamp-1">{activeCatMeta.exampleName}</span>
+                </p>
+                <p className="text-[11px] text-zinc-400">
+                  Select any category to auto-adapt sizes, pricing, and examples.
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleLoadCategoryExample}
+              className="inline-flex min-h-[38px] items-center gap-1.5 rounded-xl bg-[#B98B63] hover:bg-[#a67c55] px-3.5 py-1.5 text-xs font-bold text-black transition-all cursor-pointer shrink-0 shadow-md active:scale-95"
+              title={`Load ready-to-publish ${activeCatMeta.name} example template`}
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Load {activeCatMeta.name} Example</span>
+            </button>
+          </div>
+
           {/* 1. Name & Category */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -389,7 +555,7 @@ export default function ProductFormModal({
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Oxford Cotton Shirt"
+                placeholder={`e.g. ${activeCatMeta.exampleName}`}
                 className="w-full h-11 sm:h-10 rounded-xl border border-white/15 bg-white/5 px-3.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white"
               />
             </div>
@@ -412,6 +578,33 @@ export default function ProductFormModal({
             </div>
           </div>
 
+          {/* Quick Category Chips for One-Tap Selection across all 10 departments */}
+          <div>
+            <span className="block text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1.5">
+              Quick Select Category:
+            </span>
+            <div className="flex flex-wrap gap-1.5">
+              {CATEGORY_OPTIONS.map((opt) => {
+                const isSelected = category === opt.slug;
+                return (
+                  <button
+                    key={opt.slug}
+                    type="button"
+                    onClick={() => selectCategory(opt.slug)}
+                    className={`inline-flex min-h-[34px] items-center gap-1.5 rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-all cursor-pointer ${
+                      isSelected
+                        ? "bg-[#B98B63] text-black font-bold shadow-sm ring-1 ring-[#B98B63]/40"
+                        : "bg-white/5 border border-white/10 text-zinc-300 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-black" />}
+                    <span>{opt.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* 2. Price & Compare At Price */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -429,7 +622,7 @@ export default function ProductFormModal({
                   required
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
-                  placeholder="29.99"
+                  placeholder={activeCatMeta.examplePrice}
                   className="w-full h-11 sm:h-10 rounded-xl border border-white/15 bg-white/5 pl-9 pr-3.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white"
                 />
               </div>
@@ -449,7 +642,7 @@ export default function ProductFormModal({
                   min="0"
                   value={compareAtPrice}
                   onChange={(e) => setCompareAtPrice(e.target.value)}
-                  placeholder="39.99 (Optional)"
+                  placeholder={`${activeCatMeta.exampleCompareAtPrice} (Optional)`}
                   className="w-full h-11 sm:h-10 rounded-xl border border-white/15 bg-white/5 pl-9 pr-3.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white"
                 />
               </div>
@@ -604,15 +797,15 @@ export default function ProductFormModal({
           <div className="space-y-2.5">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300">
-                Available Sizes / Variants
+                Available Sizes / Variants <span className="text-zinc-500 font-normal">({activeCatMeta.name})</span>
               </label>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={() => setSizes(DEFAULT_SIZES)}
+                  onClick={() => setSizes(activeCatMeta.defaultSizes)}
                   className="text-xs font-semibold text-[#B98B63] hover:text-[#d3a378] transition-colors cursor-pointer"
                 >
-                  Select All (S–4XL)
+                  Reset ({activeCatMeta.name} Default)
                 </button>
                 <span className="text-zinc-600 text-xs">•</span>
                 <button
@@ -625,9 +818,9 @@ export default function ProductFormModal({
               </div>
             </div>
 
-            {/* Quick Toggle Buttons for S, M, L, XL, 2XL, 3XL, 4XL */}
+            {/* Quick Toggle Buttons for Current Category */}
             <div className="flex flex-wrap gap-2">
-              {STANDARD_SIZES.map((size) => {
+              {activeCatMeta.suggestedSizes.map((size) => {
                 const active = isSizeActive(size);
                 return (
                   <button
@@ -639,8 +832,8 @@ export default function ProductFormModal({
                         ? "border-[#B98B63] bg-[#B98B63] text-black shadow-sm ring-1 ring-[#B98B63]/40"
                         : "border-white/10 bg-white/5 text-zinc-300 hover:border-white/20 hover:bg-white/10 hover:text-white"
                     }`}
-                    title={`Toggle size ${size}`}
-                    aria-label={`Toggle size ${size}`}
+                    title={`Toggle option ${size}`}
+                    aria-label={`Toggle option ${size}`}
                   >
                     {active && <Check className="h-3.5 w-3.5 stroke-[3]" />}
                     <span>{size}</span>
@@ -654,23 +847,23 @@ export default function ProductFormModal({
               type="text"
               value={sizes}
               onChange={(e) => setSizes(e.target.value)}
-              placeholder="S, M, L, XL, 2XL, 3XL, 4XL (or custom sizes)"
+              placeholder={`e.g. ${activeCatMeta.defaultSizes}`}
               className="w-full h-11 sm:h-10 rounded-xl border border-white/15 bg-white/5 px-3.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white"
             />
             <p className="text-[11px] text-zinc-400">
-              Tap any size button above to toggle it instantly, or type custom sizes separated by commas.
+              Tap any option button above to toggle it instantly, or type custom sizes separated by commas.
             </p>
           </div>
 
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-              Description &amp; Fabric Details
+              Description &amp; Product Details
             </label>
             <textarea
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Crafted from 100% premium long-staple cotton with tailored finish..."
+              placeholder={activeCatMeta.exampleDescription}
               className="w-full rounded-xl border border-white/15 bg-white/5 p-3.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white resize-y"
             />
           </div>

@@ -57,7 +57,16 @@ export async function getLiveProducts(): Promise<Product[]> {
       return [...ALL_PRODUCTS];
     }
 
-    return (data as DbProductRow[]).map(mapRowToProduct);
+    const liveProducts = (data as DbProductRow[]).map(mapRowToProduct);
+    const liveSlugs = new Set(liveProducts.map((p) => p.slug.toLowerCase()));
+    const liveIds = new Set(liveProducts.map((p) => String(p.id)));
+
+    // Keep catalogue fallback products for all departments that have not been replaced by live items
+    const fallbackProducts = ALL_PRODUCTS.filter(
+      (p) => !liveSlugs.has(p.slug.toLowerCase()) && !liveIds.has(String(p.id))
+    );
+
+    return [...liveProducts, ...fallbackProducts];
   } catch {
     return [...ALL_PRODUCTS];
   }

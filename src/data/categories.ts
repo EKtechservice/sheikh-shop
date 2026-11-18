@@ -80,6 +80,14 @@ export const CATEGORIES: readonly Category[] = [
     tagline: "Deluxe Black-Box Gift Hampers for Him",
     description: "Take the guesswork out of gifting. Ready-to-gift presentation hampers featuring polo shirts, signature perfumes, and elegant packaging.",
   },
+  {
+    name: "Preorder Gadgets",
+    slug: "preorder",
+    image: "/images/categories/combo-deals-banner.png",
+    onSale: true,
+    tagline: "Flagship Smartphones, Pro Laptops & Premium Audio",
+    description: "Lock in your preorders for the latest electronic gadgets, flagship phones, and pro gear with guaranteed express nationwide delivery.",
+  },
 ] as const;
 
 export function getCategoryBySlug(slug: string): Category | undefined {
