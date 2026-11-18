@@ -60,6 +60,7 @@ export default function ProductCard({
           className="relative aspect-square w-full overflow-hidden rounded-lg bg-zinc-50 flex items-center justify-center transition-colors duration-200 group-hover:bg-zinc-100/60 focus-visible:ring-2 focus-visible:ring-navy focus-visible:ring-offset-2 focus:outline-none"
           aria-label={`View ${product.name} product details`}
         >
+          {/* Front Image */}
           <Image
             src={product.image}
             alt={product.name}
@@ -68,8 +69,29 @@ export default function ProductCard({
             placeholder="blur"
             blurDataURL={SQUARE_BLUR_DATA_URL}
             sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
-            className="object-contain p-4 transition-transform duration-300 ease-out group-hover:scale-108"
+            className={`object-contain p-4 transition-all duration-300 ease-out group-hover:scale-108 ${
+              product.backImage ? "group-hover:opacity-0" : ""
+            }`}
           />
+
+          {/* Back Image (Hover Reveal) */}
+          {product.backImage && (
+            <Image
+              src={product.backImage}
+              alt={`${product.name} Back View`}
+              fill
+              loading="lazy"
+              sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
+              className="object-contain p-4 transition-all duration-300 ease-out opacity-0 group-hover:opacity-100 group-hover:scale-108"
+            />
+          )}
+
+          {/* Visual Indicator Pill if product has both angles */}
+          {product.backImage && (
+            <span className="absolute bottom-2 left-2 z-10 rounded-md bg-black/60 backdrop-blur-xs px-1.5 py-0.5 text-[9px] font-semibold text-white/90 opacity-70 group-hover:opacity-100 transition-opacity">
+              Front &amp; Back
+            </span>
+          )}
         </Link>
 
         {/* Product Name */}

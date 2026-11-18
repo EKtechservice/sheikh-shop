@@ -352,13 +352,31 @@ export default function AdminDashboardClient({
                 <div key={product.id} className="p-4 space-y-3.5">
                   {/* Top: Thumbnail, Title, Category Badge */}
                   <div className="flex items-start gap-3.5">
-                    <div className="relative h-16 w-16 shrink-0 rounded-xl bg-zinc-900 border border-white/10 overflow-hidden">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        className="object-contain p-1"
-                      />
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <div className="relative h-16 w-16 shrink-0 rounded-xl bg-zinc-900 border border-white/10 overflow-hidden" title="Front Photo">
+                        <Image
+                          src={product.image}
+                          alt={`${product.name} Front`}
+                          fill
+                          className="object-contain p-1"
+                        />
+                        <span className="absolute bottom-0 inset-x-0 bg-black/70 text-[8px] font-bold text-center text-zinc-300 py-0.5">
+                          Front
+                        </span>
+                      </div>
+                      {product.backImage && (
+                        <div className="relative h-16 w-16 shrink-0 rounded-xl bg-zinc-900 border border-sky-400/30 overflow-hidden" title="Back Photo">
+                          <Image
+                            src={product.backImage}
+                            alt={`${product.name} Back`}
+                            fill
+                            className="object-contain p-1"
+                          />
+                          <span className="absolute bottom-0 inset-x-0 bg-sky-950/80 text-[8px] font-bold text-center text-sky-200 py-0.5">
+                            Back
+                          </span>
+                        </div>
+                      )}
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-start justify-between gap-2">
@@ -469,13 +487,35 @@ export default function AdminDashboardClient({
                       {/* Item Image & Title */}
                       <td className="py-4 px-4 sm:px-6">
                         <div className="flex items-center gap-3">
-                          <div className="relative h-14 w-14 shrink-0 rounded-xl bg-zinc-900 border border-white/10 overflow-hidden">
-                            <Image
-                              src={product.image}
-                              alt={product.name}
-                              fill
-                              className="object-contain p-1"
-                            />
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <div className="relative h-14 w-14 shrink-0 rounded-xl bg-zinc-900 border border-white/10 overflow-hidden" title="Front Photo">
+                              <Image
+                                src={product.image}
+                                alt={`${product.name} Front`}
+                                fill
+                                className="object-contain p-1"
+                              />
+                              <span className="absolute bottom-0 inset-x-0 bg-black/70 text-[8px] font-bold text-center text-zinc-300 py-0.5">
+                                Front
+                              </span>
+                            </div>
+                            {product.backImage ? (
+                              <div className="relative h-14 w-14 shrink-0 rounded-xl bg-zinc-900 border border-sky-400/30 overflow-hidden" title="Back Photo">
+                                <Image
+                                  src={product.backImage}
+                                  alt={`${product.name} Back`}
+                                  fill
+                                  className="object-contain p-1"
+                                />
+                                <span className="absolute bottom-0 inset-x-0 bg-sky-950/80 text-[8px] font-bold text-center text-sky-200 py-0.5">
+                                  Back
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="h-14 w-7 rounded-xl border border-dashed border-white/10 flex items-center justify-center text-[8px] text-zinc-600 text-center leading-none" title="No back photo uploaded yet">
+                                None
+                              </div>
+                            )}
                           </div>
                           <div className="min-w-0">
                             <p className="font-bold text-white text-xs sm:text-sm truncate">

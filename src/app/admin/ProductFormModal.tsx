@@ -14,6 +14,7 @@ import {
   Sparkles,
   AlertCircle,
   CheckCircle2,
+  Trash2,
 } from "lucide-react";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scrollLock";
 
@@ -55,12 +56,18 @@ export default function ProductFormModal({
   const [onSale, setOnSale] = useState(false);
   const [isNewArrival, setIsNewArrival] = useState(false);
   const [sizes, setSizes] = useState("L, XL, XXL");
+  // Front Photo State
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Back Photo State (New Feature)
+  const [backImagePreview, setBackImagePreview] = useState<string | null>(null);
+  const [selectedBackFile, setSelectedBackFile] = useState<File | null>(null);
+  const backFileInputRef = useRef<HTMLInputElement>(null);
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Initialize form state when opening / switching between edit or add
   useEffect(() => {
@@ -77,6 +84,8 @@ export default function ProductFormModal({
       setSizes(initialProduct.sizes ? initialProduct.sizes.join(", ") : "");
       setImagePreview(initialProduct.image);
       setSelectedFile(null);
+      setBackImagePreview(initialProduct.backImage || null);
+      setSelectedBackFile(null);
     } else {
       setName("");
       setCategory("shirts");
@@ -90,6 +99,8 @@ export default function ProductFormModal({
       setSizes("L, XL, XXL");
       setImagePreview(null);
       setSelectedFile(null);
+      setBackImagePreview(null);
+      setSelectedBackFile(null);
     }
     setErrorMessage(null);
   }, [initialProduct, isOpen]);
@@ -130,13 +141,13 @@ export default function ProductFormModal({
     }
   };
 
-  // Handle Image File selection with preview & validation
+  // Handle Front Image File selection with preview & validation
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 4 * 1024 * 1024) {
-      setErrorMessage("Image file exceeds 4MB limit. Please choose a smaller photo.");
+    if (file.size > 5 * 1024 * 1024) {
+      setErrorMessage("Front image exceeds 5MB limit. Please choose a smaller photo.");
       return;
     }
 
@@ -149,6 +160,35 @@ export default function ProductFormModal({
     setSelectedFile(file);
     const objectUrl = URL.createObjectURL(file);
     setImagePreview(objectUrl);
+  };
+
+  // Handle Back Image File selection with preview & validation
+  const handleBackFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      setErrorMessage("Back image exceeds 5MB limit. Please choose a smaller photo.");
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      setErrorMessage("Please select a valid image file (JPG, PNG, WebP).");
+      return;
+    }
+
+    setErrorMessage(null);
+    setSelectedBackFile(file);
+    const objectUrl = URL.createObjectURL(file);
+    setBackImagePreview(objectUrl);
+  };
+
+  const handleRemoveBackImage = () => {
+    setSelectedBackFile(null);
+    setBackImagePreview(null);
+    if (backFileInputRef.current) {
+      backFileInputRef.current.value = "";
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -185,10 +225,20 @@ export default function ProductFormModal({
     formData.append("isNewArrival", isNewArrival ? "true" : "false");
     formData.append("sizes", sizes);
 
+    // Front image payload
     if (selectedFile) {
       formData.append("imageFile", selectedFile);
     } else if (imagePreview) {
       formData.append("existingImage", imagePreview);
+    }
+
+    // Back image payload
+    if (selectedBackFile) {
+      formData.append("backImageFile", selectedBackFile);
+    } else if (backImagePreview) {
+      formData.append("existingBackImage", backImagePreview);
+    } else {
+      formData.append("removeBackImage", "true");
     }
 
     try {
@@ -344,48 +394,146 @@ export default function ProductFormModal({
             </div>
           </div>
 
-          {/* 3. Product Photo Upload / Preview */}
+          {/* 3. Product Photos Upload: Front View & Back View */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-              Product Photo
-            </label>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 rounded-xl border border-dashed border-white/20 bg-white/[0.02] p-4">
-              {/* Preview Thumbnail */}
-              <div className="relative h-20 w-20 shrink-0 rounded-xl bg-zinc-900 border border-white/10 overflow-hidden flex items-center justify-center">
-                {imagePreview ? (
-                  <Image
-                    src={imagePreview}
-                    alt="Preview"
-                    fill
-                    className="object-contain p-1"
-                  />
-                ) : (
-                  <span className="text-[10px] text-zinc-500 text-center px-1">
-                    No image
-                  </span>
-                )}
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300">
+                Product Photos <span className="text-[#B98B63]">(Front &amp; Back Views)</span>
+              </label>
+              <span className="text-[11px] text-zinc-400">
+                Supports Camera &amp; Gallery
+              </span>
+            </div>
+
+            <div className="rounded-2xl border border-dashed border-white/20 bg-white/[0.02] p-4 sm:p-5 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* 3A. FRONT PHOTO */}
+                <div className="rounded-xl border border-white/10 bg-[#141A26]/80 p-3.5 flex flex-col justify-between gap-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#E5D3B3] flex items-center gap-1.5">
+                      <span className="h-2 w-2 rounded-full bg-[#B98B63]" />
+                      Front View (Main)
+                    </span>
+                    <span className="text-[10px] uppercase font-semibold text-zinc-400 bg-white/5 px-2 py-0.5 rounded-full">
+                      Primary
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3.5">
+                    {/* Front Thumbnail */}
+                    <div className="relative h-20 w-20 shrink-0 rounded-xl bg-zinc-900 border border-white/10 overflow-hidden flex items-center justify-center">
+                      {imagePreview ? (
+                        <Image
+                          src={imagePreview}
+                          alt="Front Preview"
+                          fill
+                          className="object-contain p-1"
+                        />
+                      ) : (
+                        <span className="text-[10px] text-zinc-500 text-center px-1">
+                          No front image
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Front Controls */}
+                    <div className="flex-1 space-y-1.5">
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="w-full inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 px-3 py-2 text-xs font-semibold text-white transition-colors cursor-pointer"
+                      >
+                        <Upload className="h-4 w-4 shrink-0" />
+                        <span>{imagePreview ? "Change Front" : "Upload Front"}</span>
+                      </button>
+                      <p className="text-[10px] text-zinc-400 leading-tight">
+                        Main image shown on store catalog.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3B. BACK PHOTO (NEW) */}
+                <div className="rounded-xl border border-white/10 bg-[#141A26]/80 p-3.5 flex flex-col justify-between gap-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-wider text-sky-300 flex items-center gap-1.5">
+                      <span className="h-2 w-2 rounded-full bg-sky-400" />
+                      Back View (Reverse)
+                    </span>
+                    <span className="text-[10px] uppercase font-semibold text-zinc-400 bg-white/5 px-2 py-0.5 rounded-full">
+                      Optional
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3.5">
+                    {/* Back Thumbnail */}
+                    <div className="relative h-20 w-20 shrink-0 rounded-xl bg-zinc-900 border border-white/10 overflow-hidden flex items-center justify-center">
+                      {backImagePreview ? (
+                        <Image
+                          src={backImagePreview}
+                          alt="Back Preview"
+                          fill
+                          className="object-contain p-1"
+                        />
+                      ) : (
+                        <span className="text-[10px] text-zinc-500 text-center px-1">
+                          No back image
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Back Controls */}
+                    <div className="flex-1 space-y-1.5">
+                      <input
+                        ref={backFileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleBackFileChange}
+                        className="hidden"
+                      />
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => backFileInputRef.current?.click()}
+                          className="flex-1 inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 px-3 py-2 text-xs font-semibold text-white transition-colors cursor-pointer"
+                        >
+                          <Upload className="h-4 w-4 shrink-0" />
+                          <span>{backImagePreview ? "Change Back" : "Upload Back"}</span>
+                        </button>
+
+                        {backImagePreview && (
+                          <button
+                            type="button"
+                            onClick={handleRemoveBackImage}
+                            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-red-500/20 text-red-300 hover:bg-red-500/30 transition-colors"
+                            title="Remove back photo"
+                            aria-label="Remove back photo"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        )}
+                      </div>
+                      <p className="text-[10px] text-zinc-400 leading-tight">
+                        Shown when customers inspect back of product.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* Upload Controls */}
-              <div className="flex-1 space-y-2">
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 px-4 py-2.5 text-xs font-semibold text-white transition-colors cursor-pointer"
-                >
-                  <Upload className="h-4 w-4" />
-                  <span>{imagePreview ? "Change Photo / Camera" : "Take Photo / Upload"}</span>
-                </button>
-                <p className="text-[11px] text-zinc-400">
-                  Supports camera capture and photo library on mobile. Stored in Supabase CDN.
-                </p>
+              {/* Informational Footer */}
+              <div className="flex items-center gap-2 text-[11px] text-zinc-400 pt-1 border-t border-white/5">
+                <Sparkles className="h-3.5 w-3.5 text-[#B98B63] shrink-0" />
+                <span>
+                  Both photos are optimized and securely stored in Supabase CDN. Updates appear instantly on the public website.
+                </span>
               </div>
             </div>
           </div>

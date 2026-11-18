@@ -23,6 +23,7 @@ export default function ProductDetailView({
   );
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
+  const [activeSide, setActiveSide] = useState<"front" | "back">("front");
 
   const handleAddToCart = () => {
     addToCart(product, quantity, selectedSize || undefined);
@@ -39,6 +40,9 @@ export default function ProductDetailView({
         )
       : null;
 
+  const currentDisplayImage =
+    activeSide === "back" && product.backImage ? product.backImage : product.image;
+
   return (
     <div className="mx-auto max-w-content px-4 py-6 sm:py-8 sm:px-6 lg:px-8 pb-safe">
       {/* Back button */}
@@ -53,8 +57,8 @@ export default function ProductDetailView({
       </div>
 
       <div className="grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
-        {/* Left Column: Product Image */}
-        <div className="flex flex-col">
+        {/* Left Column: Product Image Gallery (Front & Back Views) */}
+        <div className="flex flex-col space-y-4">
           <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-6 sm:p-8 shadow-sm">
             {product.onSale && (
               <span className="absolute top-4 left-4 z-10 rounded bg-[#D32F2F] px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-xs">
@@ -62,15 +66,83 @@ export default function ProductDetailView({
               </span>
             )}
 
+            {/* Front / Back Indicator Badge */}
+            {product.backImage && (
+              <div className="absolute top-4 right-4 z-10">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-navy/90 backdrop-blur-xs px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-xs">
+                  <span className={`h-2 w-2 rounded-full ${activeSide === "front" ? "bg-[#B98B63]" : "bg-sky-400"}`} />
+                  {activeSide === "front" ? "Front View" : "Back View"}
+                </span>
+              </div>
+            )}
+
             <Image
-              src={product.image}
-              alt={product.name}
+              key={currentDisplayImage}
+              src={currentDisplayImage}
+              alt={`${product.name} ${activeSide === "front" ? "Front View" : "Back View"}`}
               fill
               priority
               sizes="(min-width: 1024px) 500px, 92vw"
-              className="object-contain p-4 sm:p-6 transition-transform duration-500 hover:scale-105"
+              className="object-contain p-4 sm:p-6 transition-all duration-300 hover:scale-105"
             />
           </div>
+
+          {/* Dual Angle Thumbnail Switcher (Front & Back) */}
+          {product.backImage && (
+            <div className="flex items-center gap-3">
+              {/* Front Thumbnail Button */}
+              <button
+                type="button"
+                onClick={() => setActiveSide("front")}
+                className={`group flex items-center gap-2.5 rounded-xl border p-2 text-left transition-all min-h-[56px] flex-1 cursor-pointer ${
+                  activeSide === "front"
+                    ? "border-navy bg-navy/5 shadow-xs ring-1 ring-navy"
+                    : "border-zinc-200 bg-white hover:border-zinc-400"
+                }`}
+              >
+                <div className="relative h-12 w-12 shrink-0 rounded-lg bg-zinc-100 overflow-hidden">
+                  <Image
+                    src={product.image}
+                    alt={`${product.name} Front View`}
+                    fill
+                    className="object-contain p-1"
+                  />
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-navy">
+                    Front View
+                  </p>
+                  <p className="text-[10px] text-text-muted">Primary Angle</p>
+                </div>
+              </button>
+
+              {/* Back Thumbnail Button */}
+              <button
+                type="button"
+                onClick={() => setActiveSide("back")}
+                className={`group flex items-center gap-2.5 rounded-xl border p-2 text-left transition-all min-h-[56px] flex-1 cursor-pointer ${
+                  activeSide === "back"
+                    ? "border-navy bg-navy/5 shadow-xs ring-1 ring-navy"
+                    : "border-zinc-200 bg-white hover:border-zinc-400"
+                }`}
+              >
+                <div className="relative h-12 w-12 shrink-0 rounded-lg bg-zinc-100 overflow-hidden">
+                  <Image
+                    src={product.backImage}
+                    alt={`${product.name} Back View`}
+                    fill
+                    className="object-contain p-1"
+                  />
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-navy">
+                    Back View
+                  </p>
+                  <p className="text-[10px] text-text-muted">Reverse Angle</p>
+                </div>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Right Column: Product Information & Buying Options */}

@@ -7,6 +7,7 @@ export interface Product {
   readonly price: number;
   readonly compareAtPrice?: number;
   readonly image: string;
+  readonly backImage?: string;
   readonly onSale: boolean;
   readonly isNewArrival?: boolean;
   readonly description?: string;

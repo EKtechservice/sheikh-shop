@@ -11,6 +11,7 @@ export interface DbProductRow {
   price: number;
   compare_at_price: number | null;
   image: string;
+  back_image?: string | null;
   on_sale: boolean;
   is_new_arrival: boolean;
   description: string | null;
@@ -31,6 +32,7 @@ export function mapRowToProduct(row: DbProductRow): Product {
     price: Number(row.price),
     compareAtPrice: row.compare_at_price ? Number(row.compare_at_price) : undefined,
     image: row.image,
+    backImage: row.back_image ?? undefined,
     onSale: Boolean(row.on_sale),
     isNewArrival: Boolean(row.is_new_arrival),
     description: row.description ?? undefined,

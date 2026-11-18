@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS public.products (
   price NUMERIC(10, 2) NOT NULL CHECK (price >= 0),
   compare_at_price NUMERIC(10, 2) CHECK (compare_at_price >= 0),
   image TEXT NOT NULL,
+  back_image TEXT,
   on_sale BOOLEAN NOT NULL DEFAULT false,
   is_new_arrival BOOLEAN NOT NULL DEFAULT false,
   description TEXT,

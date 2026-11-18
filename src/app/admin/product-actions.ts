@@ -38,6 +38,7 @@ const productSchema = z.object({
   isNewArrival: z.boolean().default(false),
   sizes: z.array(z.string()).default([]),
   existingImage: z.string().optional(),
+  existingBackImage: z.string().optional().nullable(),
 });
 
 export interface ActionResult {
@@ -48,6 +49,7 @@ export interface ActionResult {
 
 function purgeStoreCache() {
   try {
+    revalidatePath("/", "layout");
     revalidatePath("/");
     revalidatePath("/categories");
     revalidatePath("/categories/[slug]", "page");
@@ -60,6 +62,41 @@ function purgeStoreCache() {
   } catch (err) {
     console.error("Cache revalidation error:", err);
   }
+}
+
+// Reusable Image Uploader to Supabase Storage
+async function uploadImageFile(
+  supabase: any,
+  file: File,
+  prefix: string,
+  slug: string
+): Promise<{ url?: string; error?: string }> {
+  if (file.size > 5 * 1024 * 1024) {
+    return { error: "Image file exceeds 5MB limit. Please upload a smaller image." };
+  }
+  const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+  if (!allowedTypes.includes(file.type)) {
+    return { error: "Only JPG, PNG, and WebP images are allowed." };
+  }
+  const fileExt = file.type.split("/")[1] || "jpg";
+  const fileName = `${prefix}-${crypto.randomUUID().slice(0, 10)}-${slug || "item"}.${fileExt}`;
+
+  const { data: uploadData, error: uploadError } = await supabase.storage
+    .from("product-images")
+    .upload(fileName, file, {
+      contentType: file.type,
+      upsert: true,
+    });
+
+  if (uploadError) {
+    return { error: `Failed to upload ${prefix} image: ${uploadError.message}` };
+  }
+
+  const { data: publicUrlData } = supabase.storage
+    .from("product-images")
+    .getPublicUrl(uploadData.path);
+
+  return { url: publicUrlData.publicUrl };
 }
 
 function slugify(text: string): string {
@@ -139,41 +176,18 @@ export async function createProductAction(formData: FormData): Promise<ActionRes
 
     const validData = parseResult.data;
 
-    // Handle Image Upload
+    // Handle Front Image Upload
     let imageUrl = "/images/categories/shirts-v2.png"; // Fallback default
     const imageFile = formData.get("imageFile") as File | null;
 
     if (imageFile && imageFile.size > 0) {
-      // Validate max 2MB
-      if (imageFile.size > 2 * 1024 * 1024) {
-        return { error: "Image file exceeds 2MB limit. Please upload a smaller image." };
+      const uploadRes = await uploadImageFile(supabase, imageFile, "front", validData.slug || "item");
+      if (uploadRes.error) {
+        return { error: uploadRes.error };
       }
-
-      // Validate allowed mime types
-      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-      if (!allowedTypes.includes(imageFile.type)) {
-        return { error: "Only JPG, PNG, and WebP images are allowed." };
+      if (uploadRes.url) {
+        imageUrl = uploadRes.url;
       }
-
-      const fileExt = imageFile.type.split("/")[1] || "jpg";
-      const fileName = `${crypto.randomUUID().slice(0, 12)}-${validData.slug || "item"}.${fileExt}`;
-
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from("product-images")
-        .upload(fileName, imageFile, {
-          contentType: imageFile.type,
-          upsert: true,
-        });
-
-      if (uploadError) {
-        return { error: `Failed to upload image: ${uploadError.message}` };
-      }
-
-      const { data: publicUrlData } = supabase.storage
-        .from("product-images")
-        .getPublicUrl(uploadData.path);
-
-      imageUrl = publicUrlData.publicUrl;
     } else {
       const manualUrl = formData.get("imageUrl")?.toString();
       if (manualUrl?.trim()) {
@@ -181,25 +195,55 @@ export async function createProductAction(formData: FormData): Promise<ActionRes
       }
     }
 
+    // Handle Back Image Upload (Front & Back Feature)
+    let backImageUrl: string | null = null;
+    const backImageFile = formData.get("backImageFile") as File | null;
+    if (backImageFile && backImageFile.size > 0) {
+      const uploadRes = await uploadImageFile(supabase, backImageFile, "back", validData.slug || "item");
+      if (uploadRes.error) {
+        return { error: uploadRes.error };
+      }
+      if (uploadRes.url) {
+        backImageUrl = uploadRes.url;
+      }
+    } else {
+      const existingBack = formData.get("existingBackImage")?.toString();
+      if (existingBack?.trim()) {
+        backImageUrl = existingBack.trim();
+      }
+    }
+
     // Insert into Supabase products table
-    const { data: inserted, error: insertError } = await supabase
+    const insertPayload: Record<string, unknown> = {
+      name: validData.name,
+      slug: validData.slug || slugify(validData.name),
+      category: validData.category,
+      category_name: validData.categoryName,
+      price: validData.price,
+      compare_at_price: validData.compareAtPrice ?? null,
+      image: imageUrl,
+      back_image: backImageUrl || null,
+      description: validData.description || null,
+      in_stock: validData.inStock,
+      on_sale: validData.onSale,
+      is_new_arrival: validData.isNewArrival,
+      sizes: validData.sizes,
+    };
+
+    let { data: inserted, error: insertError } = await supabase
       .from("products")
-      .insert({
-        name: validData.name,
-        slug: validData.slug || slugify(validData.name),
-        category: validData.category,
-        category_name: validData.categoryName,
-        price: validData.price,
-        compare_at_price: validData.compareAtPrice ?? null,
-        image: imageUrl,
-        description: validData.description || null,
-        in_stock: validData.inStock,
-        on_sale: validData.onSale,
-        is_new_arrival: validData.isNewArrival,
-        sizes: validData.sizes,
-      })
+      .insert(insertPayload)
       .select()
       .single();
+
+    // If back_image column not yet added to Supabase DB, retry without back_image
+    if (insertError && (insertError.code === "42703" || insertError.message?.includes("back_image"))) {
+      console.warn("Notice: back_image column not present in products table yet. Inserting without back_image.");
+      delete insertPayload.back_image;
+      const retry = await supabase.from("products").insert(insertPayload).select().single();
+      inserted = retry.data;
+      insertError = retry.error;
+    }
 
     if (insertError) {
       if (insertError.code === "23505") {
@@ -241,6 +285,8 @@ export async function updateProductAction(formData: FormData): Promise<ActionRes
     const rawOnSale = formData.get("onSale") === "true";
     const rawIsNewArrival = formData.get("isNewArrival") === "true";
     const rawExistingImage = formData.get("existingImage")?.toString() || "";
+    const rawExistingBackImage = formData.get("existingBackImage")?.toString() || "";
+    const removeBackImage = formData.get("removeBackImage") === "true";
     const rawSizes = (formData.get("sizes")?.toString() || "")
       .split(",")
       .map((s) => s.trim())
@@ -266,57 +312,62 @@ export async function updateProductAction(formData: FormData): Promise<ActionRes
 
     const validData = parseResult.data;
     let imageUrl = rawExistingImage || "/images/categories/shirts-v2.png";
+    let backImageUrl: string | null = rawExistingBackImage || null;
 
-    // Handle optional new image upload
+    // Handle optional front image upload
     const imageFile = formData.get("imageFile") as File | null;
     if (imageFile && imageFile.size > 0) {
-      if (imageFile.size > 2 * 1024 * 1024) {
-        return { error: "Image file exceeds 2MB limit. Please upload a smaller image." };
+      const uploadRes = await uploadImageFile(supabase, imageFile, "front", validData.slug || "item");
+      if (uploadRes.error) {
+        return { error: uploadRes.error };
       }
-
-      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-      if (!allowedTypes.includes(imageFile.type)) {
-        return { error: "Only JPG, PNG, and WebP images are allowed." };
+      if (uploadRes.url) {
+        imageUrl = uploadRes.url;
       }
-
-      const fileExt = imageFile.type.split("/")[1] || "jpg";
-      const fileName = `${crypto.randomUUID().slice(0, 12)}-${validData.slug || "item"}.${fileExt}`;
-
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from("product-images")
-        .upload(fileName, imageFile, {
-          contentType: imageFile.type,
-          upsert: true,
-        });
-
-      if (uploadError) {
-        return { error: `Failed to upload image: ${uploadError.message}` };
-      }
-
-      const { data: publicUrlData } = supabase.storage
-        .from("product-images")
-        .getPublicUrl(uploadData.path);
-
-      imageUrl = publicUrlData.publicUrl;
     }
 
-    const { error: updateError } = await supabase
+    // Handle optional back image upload or removal
+    const backImageFile = formData.get("backImageFile") as File | null;
+    if (backImageFile && backImageFile.size > 0) {
+      const uploadRes = await uploadImageFile(supabase, backImageFile, "back", validData.slug || "item");
+      if (uploadRes.error) {
+        return { error: uploadRes.error };
+      }
+      if (uploadRes.url) {
+        backImageUrl = uploadRes.url;
+      }
+    } else if (removeBackImage) {
+      backImageUrl = null;
+    }
+
+    const updatePayload: Record<string, unknown> = {
+      name: validData.name,
+      slug: validData.slug || slugify(validData.name),
+      category: validData.category,
+      category_name: validData.categoryName,
+      price: validData.price,
+      compare_at_price: validData.compareAtPrice ?? null,
+      image: imageUrl,
+      back_image: backImageUrl,
+      description: validData.description || null,
+      in_stock: validData.inStock,
+      on_sale: validData.onSale,
+      is_new_arrival: validData.isNewArrival,
+      sizes: validData.sizes,
+    };
+
+    let { error: updateError } = await supabase
       .from("products")
-      .update({
-        name: validData.name,
-        slug: validData.slug || slugify(validData.name),
-        category: validData.category,
-        category_name: validData.categoryName,
-        price: validData.price,
-        compare_at_price: validData.compareAtPrice ?? null,
-        image: imageUrl,
-        description: validData.description || null,
-        in_stock: validData.inStock,
-        on_sale: validData.onSale,
-        is_new_arrival: validData.isNewArrival,
-        sizes: validData.sizes,
-      })
+      .update(updatePayload)
       .eq("id", productId);
+
+    // If back_image column not present yet, retry update without back_image
+    if (updateError && (updateError.code === "42703" || updateError.message?.includes("back_image"))) {
+      console.warn("Notice: back_image column not present in products table yet. Updating without back_image.");
+      delete updatePayload.back_image;
+      const retry = await supabase.from("products").update(updatePayload).eq("id", productId);
+      updateError = retry.error;
+    }
 
     if (updateError) {
       return { error: updateError.message };
