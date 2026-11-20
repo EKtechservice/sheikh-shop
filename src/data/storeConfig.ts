@@ -55,8 +55,8 @@ export function buildWhatsAppOrderLink(order: CustomerOrderDetails): string {
 
   const deliveryText =
     order.deliveryMethod === "pickup"
-      ? "🏪 Free Store Pickup (Order Online, Pick Up Today)"
-      : `🚚 Nationwide Courier Delivery across Ghana ($${order.deliveryFee.toFixed(2)})`;
+      ? "🏪 Store Pickup (Akyem New Tafo)"
+      : `🚚 Nationwide Courier Delivery across Ghana (1-2 Days - $${order.deliveryFee.toFixed(2)})`;
 
   const addressBlock =
     order.deliveryMethod === "delivery" && order.deliveryAddress

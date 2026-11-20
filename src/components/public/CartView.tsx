@@ -325,7 +325,7 @@ export default function CartView() {
                   >
                     <Store className="h-5 w-5 mb-1" />
                     <span className="text-xs font-bold">Store Pickup</span>
-                    <span className="text-[10px] opacity-80">FREE in Accra</span>
+                    <span className="text-[10px] opacity-80">Akyem New tafo</span>
                   </button>
 
                   <button
@@ -339,7 +339,7 @@ export default function CartView() {
                   >
                     <Truck className="h-5 w-5 mb-1" />
                     <span className="text-xs font-bold">Nationwide</span>
-                    <span className="text-[10px] opacity-80">+$5.00 (24-48hr)</span>
+                    <span className="text-[10px] opacity-80">1-2days</span>
                   </button>
                 </div>
               </div>
@@ -436,7 +436,7 @@ export default function CartView() {
               </div>
               <div className="flex items-center gap-2 text-[11px] text-zinc-600">
                 <Truck className="h-3.5 w-3.5 text-navy shrink-0" />
-                <span>Free Accra Pickup or 24-48hr Express Delivery</span>
+                <span>Free Akyem New Tafo Pickup or 1-2 Days Express Delivery</span>
               </div>
             </div>
           </div>
