@@ -97,7 +97,7 @@ export default function TrackOrderForm() {
                 <Package className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm font-bold text-navy">2. Quality Inspected &amp; Weatherproof Packed</p>
+                <p className="text-sm font-bold text-navy">2. Quality Inspected &amp; Waterproof Packed</p>
                 <p className="text-xs text-zinc-500 mt-0.5">Cloth neck, sewing, pocket checked. Sealed in dual protective bag.</p>
               </div>
             </div>

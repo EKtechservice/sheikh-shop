@@ -572,7 +572,7 @@ export default function AboutPage() {
                   <Package className="h-6 w-6" />
                 </div>
                 <h3 className="text-base font-bold uppercase text-white">
-                  Weatherproof Packing
+                  Waterproof Packing
                 </h3>
                 <p className="mt-2 text-xs text-zinc-300 leading-relaxed">
                   Neat packaging for far delivery: clear bag inside, strong black bag outside. Rain will not spoil your cloth.

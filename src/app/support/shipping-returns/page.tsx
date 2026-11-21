@@ -21,7 +21,7 @@ import {
 export const metadata: Metadata = {
   title: "Shipping & Returns Policy | Sheikh Trading Enterprise",
   description:
-    "Learn about our nationwide bus and driver delivery across Ghana, our weatherproof packaging, and our replacement policy at Sheikh Trading Enterprise.",
+    "Learn about our nationwide bus and driver delivery across Ghana, our waterproof packaging, and our replacement policy at Sheikh Trading Enterprise.",
 };
 
 export default function ShippingReturnsPage() {
@@ -137,7 +137,7 @@ export default function ShippingReturnsPage() {
               <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs">
                 <div className="flex items-center gap-2 text-navy font-bold text-base mb-2">
                   <Package className="h-5 w-5 text-tan" />
-                  <span>Our Weatherproof Packaging Standard</span>
+                  <span>Our Waterproof Packaging Standard</span>
                 </div>
                 <p className="text-xs text-zinc-600 leading-relaxed">
                   Rain will never spoil your cloth. Every single order is packed with dual-layer protection:

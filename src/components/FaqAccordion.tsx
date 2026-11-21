@@ -57,7 +57,7 @@ const FAQS: readonly FaqItem[] = [
     category: "delivery",
     question: "How is my cloth packaged for delivery?",
     answer:
-      "Every order is double-packed for complete weatherproofing: first in a clean, transparent inner bag, and then sealed in a strong, heavy-duty black security courier bag with your name and delivery town clearly marked. Even if it rains heavily during transit, your clothes will arrive 100% dry and spotless.",
+      "Every order is double-packed for complete waterproofing: first in a clean, transparent inner bag, and then sealed in a strong, heavy-duty black security courier bag with your name and delivery town clearly marked. Even if it rains heavily during transit, your clothes will arrive 100% dry and spotless.",
   },
   {
     category: "delivery",
