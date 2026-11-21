@@ -25,11 +25,11 @@ const productSchema = z.object({
   categoryName: z.string().trim().min(1, "Category name is required"),
   price: z.coerce
     .number({ message: "Price must be a valid number" })
-    .positive("Price must be greater than $0")
-    .max(99999, "Price cannot exceed $99,999"),
+    .positive("Price must be greater than GH₵ 0")
+    .max(99999, "Price cannot exceed GH₵ 99,999"),
   compareAtPrice: z.coerce
     .number()
-    .positive("Compare-at price must be greater than $0")
+    .positive("Compare-at price must be greater than GH₵ 0")
     .optional()
     .nullable(),
   description: z.string().trim().max(2000, "Description cannot exceed 2000 characters").optional(),

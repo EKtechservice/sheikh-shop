@@ -631,11 +631,11 @@ export default function ProductFormModal({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-                Selling Price (USD $) <span className="text-red-400">*</span>
+                Selling Price (GH₵) <span className="text-red-400">*</span>
               </label>
               <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-zinc-500">
-                  <DollarSign className="h-4 w-4" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-400 font-bold text-[11px]">
+                  GH₵
                 </div>
                 <input
                   type="number"
@@ -645,18 +645,18 @@ export default function ProductFormModal({
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   placeholder={activeCatMeta.examplePrice}
-                  className="w-full h-11 sm:h-10 rounded-xl border border-white/15 bg-white/5 pl-9 pr-3.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white"
+                  className="w-full h-11 sm:h-10 rounded-xl border border-white/15 bg-white/5 pl-12 pr-3.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white"
                 />
               </div>
             </div>
 
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-                Original Price (Strike-through)
+                Original Price (Strike-through - GH₵)
               </label>
               <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-zinc-500">
-                  <DollarSign className="h-4 w-4" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-400 font-bold text-[11px]">
+                  GH₵
                 </div>
                 <input
                   type="number"
@@ -665,7 +665,7 @@ export default function ProductFormModal({
                   value={compareAtPrice}
                   onChange={(e) => setCompareAtPrice(e.target.value)}
                   placeholder={`${activeCatMeta.exampleCompareAtPrice} (Optional)`}
-                  className="w-full h-11 sm:h-10 rounded-xl border border-white/15 bg-white/5 pl-9 pr-3.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white"
+                  className="w-full h-11 sm:h-10 rounded-xl border border-white/15 bg-white/5 pl-12 pr-3.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white"
                 />
               </div>
             </div>

@@ -396,7 +396,7 @@ export const ALL_PRODUCTS: readonly Product[] = [
     image: "/images/categories/combo-deals-v2.png",
     onSale: true,
     isNewArrival: true,
-    description: "The complete luxury essentials trio: 1x Black Mercerized Slim Polo, 1x Premium Modal Boxer, and 1x Sheikh Signature Noir Eau de Parfum (50ml). Save $85 instantly.",
+    description: "The complete luxury essentials trio: 1x Black Mercerized Slim Polo, 1x Premium Modal Boxer, and 1x Sheikh Signature Noir Eau de Parfum (50ml). Save GH₵ 85 instantly.",
     sizes: ["S / M", "M / L", "L / XL", "XL / XXL"],
   },
   {

@@ -23,9 +23,9 @@ const FEATURES: readonly Feature[] = [
   },
   {
     icon: Truck,
-    title: "Fast & Free Shipping",
+    title: "Fast Shipping & Pickup",
     description:
-      "Free shipping on all orders over $100. Delivered in 2-5 business days.",
+      "Free store pickup in Akyem New Tafo & nationwide delivery across Ghana in 1-2 days.",
   },
   {
     icon: RefreshCw,

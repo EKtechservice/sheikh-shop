@@ -8,7 +8,7 @@ export const STORE_CONFIG = {
   // Owner WhatsApp: 0593684022 -> 233593684022
   whatsappNumber:
     process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "233593684022",
-  currency: "$",
+  currency: "GH₵",
   email: "orders@sheikhsshop.com",
   phoneDisplay: "+233 59 368 4022",
   phoneRaw: "0593684022",
@@ -47,7 +47,7 @@ export function buildWhatsAppOrderLink(order: CustomerOrderDetails): string {
     .map((item, index) => {
       const sizeText = item.size ? ` (Option: ${item.size})` : "";
       const itemTotal = (item.price * item.quantity).toFixed(2);
-      return `${index + 1}. *${item.name}*${sizeText}%0A   Qty: ${item.quantity} x $${item.price.toFixed(2)} = *$${itemTotal}*`;
+      return `${index + 1}. *${item.name}*${sizeText}%0A   Qty: ${item.quantity} x GH₵ ${item.price.toFixed(2)} = *GH₵ ${itemTotal}*`;
     })
     .join("%0A%0A");
 
@@ -56,7 +56,7 @@ export function buildWhatsAppOrderLink(order: CustomerOrderDetails): string {
   const deliveryText =
     order.deliveryMethod === "pickup"
       ? "🏪 Store Pickup (Akyem New Tafo)"
-      : `🚚 Nationwide Courier Delivery across Ghana (1-2 Days - $${order.deliveryFee.toFixed(2)})`;
+      : `🚚 Nationwide Courier Delivery across Ghana (1-2 Days - GH₵ ${order.deliveryFee.toFixed(2)})`;
 
   const addressBlock =
     order.deliveryMethod === "delivery" && order.deliveryAddress
@@ -80,11 +80,11 @@ export function buildWhatsAppOrderLink(order: CustomerOrderDetails): string {
     `*📦 Ordered Items:*%0A%0A` +
     itemsList +
     `%0A%0A--------------------------------------%0A` +
-    `*Subtotal:* $${order.totalPrice.toFixed(2)}%0A` +
+    `*Subtotal:* GH₵ ${order.totalPrice.toFixed(2)}%0A` +
     (order.deliveryFee > 0
-      ? `*Delivery Fee:* $${order.deliveryFee.toFixed(2)}%0A`
+      ? `*Delivery Fee:* GH₵ ${order.deliveryFee.toFixed(2)}%0A`
       : "") +
-    `*💰 Total Amount:* *$${grandTotal}*%0A` +
+    `*💰 Total Amount:* *GH₵ ${grandTotal}*%0A` +
     `--------------------------------------%0A` +
     `Hello Sheikh's Shop, I just placed this order on your website. Please confirm availability and send me payment details. Thank you!`;
 
