@@ -74,6 +74,8 @@ function getCategoryFallbackImage(categorySlug?: string): string {
   const map: Record<string, string> = {
     shirts: "/images/categories/shirts-v2.png",
     "polo-shirts": "/images/categories/polo-shirts-v2.png",
+    hoodies: "/images/categories/hoodies-v2.png",
+    joggers: "/images/categories/joggers-v2.png",
     shorts: "/images/categories/shorts-v2.png",
     boxers: "/images/categories/boxers-v2.png",
     perfumes: "/images/categories/perfumes-v2.png",

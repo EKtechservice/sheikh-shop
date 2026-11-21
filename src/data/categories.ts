@@ -25,6 +25,22 @@ export const CATEGORIES: readonly Category[] = [
     description: "Effortless resort style and smart-casual luxury. Breathable linen polos and mercerized cotton knits tailored for a modern fit.",
   },
   {
+    name: "Hoodies",
+    slug: "hoodies",
+    image: "/images/categories/hoodies-v2.png",
+    onSale: true,
+    tagline: "Heavyweight Fleece & Tailored Streetwear",
+    description: "Ultra-comfortable premium heavyweight cotton hoodies with double-lined hoods, ribbed trims, and clean modern silhouettes.",
+  },
+  {
+    name: "Joggers",
+    slug: "joggers",
+    image: "/images/categories/joggers-v2.png",
+    onSale: true,
+    tagline: "Tailored Tech Fleece & Relaxed Luxury Loungewear",
+    description: "Sleek tapered fit sweatpants and luxury tech fleece joggers with metal-tipped drawstrings, secure pockets, and all-day comfort.",
+  },
+  {
     name: "Shorts",
     slug: "shorts",
     image: "/images/categories/shorts-v2.png",

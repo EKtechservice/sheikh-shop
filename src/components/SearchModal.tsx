@@ -17,9 +17,10 @@ interface SearchModalProps {
 
 const POPULAR_SEARCHES = [
   "Quality Shirts",
+  "Hoodies",
+  "Joggers",
   "Budget Shirts",
   "Slides",
-  "Joggers",
   "Shorts",
   "Polo Shirts",
   "Combo Deals",
@@ -303,6 +304,8 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   {[
                     { name: "Shirts (Quality & Budget)", href: "/categories/shirts" },
                     { name: "Polo Shirts", href: "/categories/polo-shirts" },
+                    { name: "Hoodies", href: "/categories/hoodies" },
+                    { name: "Joggers", href: "/categories/joggers" },
                     { name: "Shorts", href: "/categories/shorts" },
                     { name: "Black Slides", href: "/categories/slides" },
                     { name: "Combo Deals", href: "/categories/combo-deals" },

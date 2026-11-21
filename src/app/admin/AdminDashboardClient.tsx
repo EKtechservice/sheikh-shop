@@ -305,6 +305,8 @@ export default function AdminDashboardClient({
               <option value="all">All Categories</option>
               <option value="shirts">Shirts</option>
               <option value="polo-shirts">Polo Shirts</option>
+              <option value="hoodies">Hoodies</option>
+              <option value="joggers">Joggers</option>
               <option value="shorts">Shorts</option>
               <option value="boxers">Boxers</option>
               <option value="perfumes">Perfumes</option>

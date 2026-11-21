@@ -19,6 +19,8 @@ const FOOTER_NAV: readonly FooterLinkGroup[] = [
       { name: "New Arrivals", href: "/new-arrivals" },
       { name: "Shirts", href: "/categories/shirts" },
       { name: "Polo Shirts", href: "/categories/polo-shirts" },
+      { name: "Hoodies", href: "/categories/hoodies" },
+      { name: "Joggers", href: "/categories/joggers" },
       { name: "Shorts", href: "/categories/shorts" },
       { name: "Jeans", href: "/categories/jeans" },
       { name: "Boxers", href: "/categories/boxers" },
