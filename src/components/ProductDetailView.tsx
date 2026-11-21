@@ -7,6 +7,7 @@ import type { Product } from "@/data/products";
 import { formatPrice } from "@/lib/utils";
 import { useCart } from "@/components/CartProvider";
 import { ShoppingBag, Check, ShieldCheck, Truck, Store, ArrowLeft } from "lucide-react";
+import ProductImageZoomViewer from "@/components/ProductImageZoomViewer";
 
 interface ProductDetailViewProps {
   product: Product;
@@ -57,35 +58,18 @@ export default function ProductDetailView({
       </div>
 
       <div className="grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
-        {/* Left Column: Product Image Gallery (Front & Back Views) */}
+        {/* Left Column: Interactive Product Image Gallery with Zoom & Pan */}
         <div className="flex flex-col space-y-4">
-          <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-6 sm:p-8 shadow-sm">
-            {product.onSale && (
-              <span className="absolute top-4 left-4 z-10 rounded bg-[#D32F2F] px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-xs">
-                Sale {discountPercent ? `-${discountPercent}%` : ""}
-              </span>
-            )}
-
-            {/* Front / Back Indicator Badge */}
-            {product.backImage && (
-              <div className="absolute top-4 right-4 z-10">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-navy/90 backdrop-blur-xs px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-xs">
-                  <span className={`h-2 w-2 rounded-full ${activeSide === "front" ? "bg-[#B98B63]" : "bg-sky-400"}`} />
-                  {activeSide === "front" ? "Front View" : "Back View"}
-                </span>
-              </div>
-            )}
-
-            <Image
-              key={currentDisplayImage}
-              src={currentDisplayImage}
-              alt={`${product.name} ${activeSide === "front" ? "Front View" : "Back View"}`}
-              fill
-              priority
-              sizes="(min-width: 1024px) 500px, 92vw"
-              className="object-contain p-4 sm:p-6 transition-all duration-300 hover:scale-105"
-            />
-          </div>
+          <ProductImageZoomViewer
+            productName={product.name}
+            categoryName={product.categoryName}
+            frontImage={product.image}
+            backImage={product.backImage}
+            activeSide={activeSide}
+            onToggleSide={(side) => setActiveSide(side)}
+            onSale={product.onSale}
+            discountPercent={discountPercent}
+          />
 
           {/* Dual Angle Thumbnail Switcher (Front & Back) */}
           {product.backImage && (
