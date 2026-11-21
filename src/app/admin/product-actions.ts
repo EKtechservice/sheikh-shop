@@ -70,7 +70,7 @@ function purgeStoreCache(categorySlug?: string, productSlug?: string) {
   }
 }
 
-export function getCategoryFallbackImage(categorySlug?: string): string {
+function getCategoryFallbackImage(categorySlug?: string): string {
   const map: Record<string, string> = {
     shirts: "/images/categories/shirts-v2.png",
     "polo-shirts": "/images/categories/polo-shirts-v2.png",
