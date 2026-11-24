@@ -66,7 +66,7 @@ export const SOCIAL_LINKS = [
   },
   {
     name: "TikTok",
-    href: "https://www.tiktok.com",
+    href: "https://www.tiktok.com/@sheikh_tradingenterprise?lang=en-GB",
     ariaLabel: "Follow Sheikh's Shop on TikTok",
     icon: TikTokIcon,
   },
