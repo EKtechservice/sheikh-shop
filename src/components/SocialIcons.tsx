@@ -60,7 +60,7 @@ export const SOCIAL_LINKS = [
   },
   {
     name: "Facebook",
-    href: "https://www.facebook.com",
+    href: "https://web.facebook.com/SheikhTradingEnterprise",
     ariaLabel: "Follow Sheikh's Shop on Facebook",
     icon: FacebookIcon,
   },
