@@ -6,6 +6,7 @@ import AnnouncementBar from "@/components/AnnouncementBar";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 import Newsletter from "@/components/Newsletter";
+import SocialLinks from "@/components/SocialIcons";
 import { ChevronRight, Mail, Phone, MapPin, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -101,6 +102,13 @@ export default function ContactPage() {
                     <p className="mt-1 text-sm text-zinc-600">Monday – Saturday: 8:00 AM – 8:00 PM</p>
                     <p className="text-xs text-text-muted">Sunday: 1:00 PM – 7:00 PM</p>
                   </div>
+                </div>
+
+                <div className="pt-4 border-t border-zinc-200">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-navy mb-3">
+                    Connect on Social Media
+                  </h3>
+                  <SocialLinks buttonClassName="flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-navy/5 text-navy hover:bg-navy hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-navy focus:outline-none" />
                 </div>
               </div>
             </div>

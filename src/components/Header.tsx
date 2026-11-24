@@ -6,6 +6,7 @@ import { Search, User, ShoppingCart, Menu, X } from "lucide-react";
 import { useCart } from "@/components/CartProvider";
 import Logo from "@/components/Logo";
 import SearchModal from "@/components/SearchModal";
+import SocialLinks from "@/components/SocialIcons";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scrollLock";
 
 interface NavLinkItem {
@@ -237,6 +238,11 @@ export default function Header({ cartCount: explicitCartCount }: HeaderProps) {
                 <ShoppingCart className="h-4 w-4" aria-hidden="true" />
                 <span>Cart ({cartCount})</span>
               </Link>
+
+              {/* Social Channels in Drawer */}
+              <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-around">
+                <SocialLinks buttonClassName="flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full text-zinc-400 hover:text-white hover:bg-white/10 transition-colors focus-visible:ring-2 focus-visible:ring-white/70 focus:outline-none" />
+              </div>
             </div>
           </div>
         </div>

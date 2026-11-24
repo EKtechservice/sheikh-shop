@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Logo from "@/components/Logo";
+import SocialLinks from "@/components/SocialIcons";
 
 interface FooterLink {
   readonly name: string;
@@ -67,6 +68,14 @@ export default function Footer() {
             <p className="mt-4 max-w-[220px] text-[14px] leading-relaxed text-zinc-400">
               Elevating modern menswear with timeless essentials.
             </p>
+
+            {/* Social Media Channels */}
+            <div className="mt-6 flex flex-col gap-2.5">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
+                Follow Us
+              </span>
+              <SocialLinks />
+            </div>
           </div>
 
           {/* COLUMNS 2, 3, 4: Navigation Link Groups */}
@@ -96,42 +105,53 @@ export default function Footer() {
       </div>
 
       {/* BOTTOM COPYRIGHT BAR with Safe Area Padding */}
-      <div className="w-full bg-footer-bottom py-4 pb-safe">
-        <div className="mx-auto max-w-content px-4 text-center sm:px-6 lg:px-8">
-          <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 text-[13px] text-zinc-400">
-            <span>&copy; 2026 Sheikh&apos;s Shop. All rights reserved.</span>
-            <span
-              className="hidden sm:inline-block text-zinc-600"
-              aria-hidden="true"
-            >
-              •
-            </span>
-            <span>Powered by secure payments</span>
-            <span
-              className="hidden sm:inline-block text-zinc-600"
-              aria-hidden="true"
-            >
-              •
-            </span>
-            <Link
-              href="/privacy"
-              className="py-1 px-1 underline-offset-4 hover:text-white hover:underline focus-visible:ring-2 focus-visible:ring-white/70 focus:outline-none rounded-xs"
-            >
-              Privacy
-            </Link>
-            <span
-              className="hidden sm:inline-block text-zinc-600"
-              aria-hidden="true"
-            >
-              •
-            </span>
-            <Link
-              href="/terms"
-              className="py-1 px-1 underline-offset-4 hover:text-white hover:underline focus-visible:ring-2 focus-visible:ring-white/70 focus:outline-none rounded-xs"
-            >
-              Terms
-            </Link>
-          </p>
+      <div className="w-full bg-footer-bottom py-6 pb-safe border-t border-white/5">
+        <div className="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+            {/* Social Media Buttons (Instagram, Facebook, TikTok) */}
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-semibold text-zinc-400">
+                Connect With Us:
+              </span>
+              <SocialLinks buttonClassName="flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full text-zinc-400 hover:text-white hover:bg-white/10 transition-colors focus-visible:ring-2 focus-visible:ring-white/70 focus:outline-none" />
+            </div>
+
+            {/* Copyright & Legal Links */}
+            <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 text-[13px] text-zinc-400">
+              <span>&copy; 2026 Sheikh&apos;s Shop. All rights reserved.</span>
+              <span
+                className="hidden sm:inline-block text-zinc-600"
+                aria-hidden="true"
+              >
+                •
+              </span>
+              <span>Powered by secure payments</span>
+              <span
+                className="hidden sm:inline-block text-zinc-600"
+                aria-hidden="true"
+              >
+                •
+              </span>
+              <Link
+                href="/privacy"
+                className="py-1 px-1 underline-offset-4 hover:text-white hover:underline focus-visible:ring-2 focus-visible:ring-white/70 focus:outline-none rounded-xs"
+              >
+                Privacy
+              </Link>
+              <span
+                className="hidden sm:inline-block text-zinc-600"
+                aria-hidden="true"
+              >
+                •
+              </span>
+              <Link
+                href="/terms"
+                className="py-1 px-1 underline-offset-4 hover:text-white hover:underline focus-visible:ring-2 focus-visible:ring-white/70 focus:outline-none rounded-xs"
+              >
+                Terms
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
