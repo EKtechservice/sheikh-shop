@@ -212,13 +212,13 @@ export default function AdminDashboardClient({
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-[#0D1016] p-4 sm:p-5 shadow-sm">
-          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B98B63]">
-            On Sale
+          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-red-400">
+            Out of Stock
           </span>
-          <p className="mt-1 sm:mt-2 text-2xl sm:text-3xl font-extrabold text-[#B98B63]">
+          <p className="mt-1 sm:mt-2 text-2xl sm:text-3xl font-extrabold text-red-400">
             {onSaleCount}
           </p>
-          <span className="mt-0.5 sm:mt-1 block text-[11px] sm:text-xs text-zinc-500">Active promo prices</span>
+          <span className="mt-0.5 sm:mt-1 block text-[11px] sm:text-xs text-zinc-500">Items marked out of stock</span>
         </div>
       </div>
 
@@ -407,8 +407,8 @@ export default function AdminDashboardClient({
                         )}
 
                         {product.onSale && (
-                          <span className="rounded-md bg-[#B98B63]/15 border border-[#B98B63]/30 px-1.5 py-0.5 text-[10px] font-bold uppercase text-[#B98B63]">
-                            Sale
+                          <span className="rounded-md bg-red-500/15 border border-red-500/30 px-1.5 py-0.5 text-[10px] font-bold uppercase text-red-400">
+                            Out of Stock
                           </span>
                         )}
                       </div>
@@ -552,8 +552,8 @@ export default function AdminDashboardClient({
                             </span>
                           )}
                           {product.onSale && (
-                            <span className="text-[10px] text-[#B98B63] font-bold uppercase tracking-wider">
-                              Sale
+                            <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider">
+                              Out of Stock
                             </span>
                           )}
                         </div>

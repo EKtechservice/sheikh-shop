@@ -80,7 +80,7 @@ export default async function CategoriesPage() {
                       </span>
                       {category.onSale && (
                         <span className="rounded bg-sale-red px-2 py-0.5 text-[10px] font-bold uppercase text-white shadow-xs">
-                          Sale
+                          Out of Stock
                         </span>
                       )}
                     </div>

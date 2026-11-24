@@ -48,10 +48,10 @@ export default function ProductCard({
 
   return (
     <article className="group relative flex flex-col justify-between overflow-hidden rounded-xl bg-white p-4 shadow-md transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-2xl">
-      {/* Top-Right "SALE" Badge */}
+      {/* Top-Right "Out of Stock" Badge */}
       {product.onSale && (
         <span className="absolute top-3 right-3 z-10 rounded bg-[#D32F2F] px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-white shadow-xs animate-pulse-subtle">
-          Sale
+          Out of Stock
         </span>
       )}
 

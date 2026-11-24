@@ -230,10 +230,10 @@ export default function ProductImageZoomViewer({
   return (
     <>
       <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 shadow-sm group select-none">
-        {/* Sale Badge */}
+        {/* Out of Stock Badge */}
         {onSale && (
           <span className="absolute top-4 left-4 z-20 rounded bg-[#D32F2F] px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-xs">
-            Sale {discountPercent ? `-${discountPercent}%` : ""}
+            Out of Stock
           </span>
         )}
 

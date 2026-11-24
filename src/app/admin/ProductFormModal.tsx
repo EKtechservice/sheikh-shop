@@ -912,7 +912,7 @@ export default function ProductFormModal({
                 className="h-5 w-5 rounded border-zinc-600 bg-zinc-800 text-[#1B2A4A] focus:ring-0"
               />
               <span className="text-xs font-semibold text-zinc-200">
-                On Sale (Discount Badge)
+                Out of Stock
               </span>
             </label>
 

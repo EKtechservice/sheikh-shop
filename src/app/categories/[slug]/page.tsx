@@ -81,7 +81,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <div className="max-w-xl">
                 {category.onSale && (
                   <span className="inline-block mb-3 rounded-full bg-sale-red/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-xs">
-                    Special Collection • On Sale
+                    Out of Stock
                   </span>
                 )}
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-white">

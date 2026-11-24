@@ -83,10 +83,10 @@ export default function HeroCategories() {
                       : "opacity-0 translate-y-6 motion-reduce:opacity-100 motion-reduce:translate-y-0"
                   }`}
                 >
-                  {/* Red SALE Badge with subtle pulse */}
+                  {/* Red Out of Stock Badge with subtle pulse */}
                   {category.onSale && (
                     <span className="absolute top-2 right-2 z-10 rounded bg-[#D32F2F] px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-white shadow-xs animate-pulse-subtle">
-                      Sale
+                      Out of Stock
                     </span>
                   )}
 
