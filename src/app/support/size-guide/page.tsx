@@ -21,11 +21,7 @@ export const metadata: Metadata = {
 };
 
 export default function SizeGuidePage() {
-  const whatsappUrl =
-    "https://wa.me/233593684022?text=" +
-    encodeURIComponent(
-      "Hello Sheikh Trading Enterprise, I need advice on my size. My height/weight is: "
-    );
+  const whatsappUrl = "https://wa.me/message/PSFB74E34YBZJ1";
 
   return (
     <div className="flex min-h-screen flex-col bg-white">

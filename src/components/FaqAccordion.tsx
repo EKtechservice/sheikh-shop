@@ -78,11 +78,7 @@ export default function FaqAccordion() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const whatsappUrl =
-    "https://wa.me/233593684022?text=" +
-    encodeURIComponent(
-      "Hello Sheikh Trading Enterprise, I have a question that was not answered in the FAQs. Can you help me?"
-    );
+  const whatsappUrl = "https://wa.me/message/PSFB74E34YBZJ1";
 
   return (
     <div className="w-full">

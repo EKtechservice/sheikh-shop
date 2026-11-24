@@ -25,11 +25,7 @@ export const metadata: Metadata = {
 };
 
 export default function ShippingReturnsPage() {
-  const whatsappUrl =
-    "https://wa.me/233593684022?text=" +
-    encodeURIComponent(
-      "Hello Sheikh Trading Enterprise, I have a question about shipping/delivery to my town."
-    );
+  const whatsappUrl = "https://wa.me/message/PSFB74E34YBZJ1";
 
   return (
     <div className="flex min-h-screen flex-col bg-white">

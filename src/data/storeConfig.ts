@@ -8,6 +8,7 @@ export const STORE_CONFIG = {
   // Owner WhatsApp: 0593684022 -> 233593684022
   whatsappNumber:
     process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "233593684022",
+  whatsappDirectLink: "https://wa.me/message/PSFB74E34YBZJ1",
   currency: "GH₵",
   email: "orders@sheikhsshop.com",
   phoneDisplay: "+233 59 368 4022",

@@ -27,11 +27,7 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const whatsappUrl =
-    "https://wa.me/233593684022?text=" +
-    encodeURIComponent(
-      "Hello Sheikh Trading Enterprise, I am reaching out from your website. Please show me what sizes and colours are available today."
-    );
+  const whatsappUrl = "https://wa.me/message/PSFB74E34YBZJ1";
 
   return (
     <div className="flex min-h-screen flex-col bg-white">

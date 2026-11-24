@@ -73,11 +73,7 @@ export default function AccountView() {
     }
   };
 
-  const whatsappConciergeUrl =
-    "https://wa.me/233593684022?text=" +
-    encodeURIComponent(
-      `Hello Sheikh Trading Enterprise, my name is ${profile.fullName || "Customer"} (WhatsApp: ${profile.phone || "N/A"}). I would like to inquire about today's available stock and sizes.`
-    );
+  const whatsappConciergeUrl = "https://wa.me/message/PSFB74E34YBZJ1";
 
   return (
     <div className="mx-auto max-w-content px-4 py-12 sm:px-6 lg:px-8">

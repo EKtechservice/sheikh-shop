@@ -23,11 +23,7 @@ export default function TrackOrderForm() {
     }
   };
 
-  const whatsappInquireUrl =
-    "https://wa.me/233593684022?text=" +
-    encodeURIComponent(
-      `Hello Sheikh Trading Enterprise, I want to track my order. My phone number / reference is: ${orderQuery || "Customer"}`
-    );
+  const whatsappInquireUrl = "https://wa.me/message/PSFB74E34YBZJ1";
 
   return (
     <div className="w-full max-w-2xl mx-auto">

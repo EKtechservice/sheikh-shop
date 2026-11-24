@@ -17,14 +17,7 @@ export default function ContactForm() {
   };
 
   const handleWhatsAppDirect = () => {
-    let cleanPhone = STORE_CONFIG.whatsappNumber.replace(/[^0-9]/g, "");
-    if (cleanPhone.startsWith("0") && cleanPhone.length === 10) {
-      cleanPhone = "233" + cleanPhone.slice(1);
-    }
-    const text = encodeURIComponent(
-      `Hello ${STORE_CONFIG.name}, my name is ${name || "Customer"}. I have a question regarding ${topic}:\n\n${message || "Could you please assist me?"}`
-    );
-    window.open(`https://wa.me/${cleanPhone}?text=${text}`, "_blank", "noopener,noreferrer");
+    window.open(STORE_CONFIG.whatsappDirectLink || "https://wa.me/message/PSFB74E34YBZJ1", "_blank", "noopener,noreferrer");
   };
 
   if (isSubmitted) {
