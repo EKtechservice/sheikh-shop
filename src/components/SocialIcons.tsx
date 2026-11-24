@@ -54,7 +54,7 @@ export interface SocialLinksProps {
 export const SOCIAL_LINKS = [
   {
     name: "Instagram",
-    href: "https://www.instagram.com",
+    href: "https://www.instagram.com/sheikh_trading_enterprise?mdxt=anZ1OWllcm1meGI3&utm_source=qr",
     ariaLabel: "Follow Sheikh's Shop on Instagram",
     icon: InstagramIcon,
   },
